@@ -18,4 +18,7 @@ APIs:
 * Websocket - https://www.npmjs.com/package/ws#api-docs
 * AWW - https://awwapp.com/apis/?fbclid=IwAR1hXxgfolGHJ6l6xdiR7altgh3FiqUpOK7X9Xo3t6KQHmvnWyD-S_GMmcQ
 
-
+### TA Comments (Nov. 1 2020)
+- Feasibility: The two APIs well support your goal and seem easy-to-use. You might face some challenges of incorporating them with React.
+- Scope: The scope is moderate. It just seems that most features have been supported by the AWW API. You might want to think about adding something to it.  
+- Requirements: All satisfied.
