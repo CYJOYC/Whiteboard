@@ -1,0 +1,27 @@
+.solidButton,
+.outlineButton,
+.noOutlineButton {
+	border-radius: 10px;
+	font-weight: 400;
+	padding: 5px 30px;
+	height: 35px;
+	margin: 0 10px;
+}
+
+.solidButton {
+	border: none;
+	background-color: #60BCFF;
+	color: white;
+}
+
+.outlineButton {
+	border: 1px solid #60BCFF;
+	color: #60BCFF;
+	background-color: transparent;
+}
+
+.noOutlineButton {
+	border: none;
+	color: #60BCFF;
+	background-color: transparent;
+}

@@ -1,65 +1,49 @@
 import Head from 'next/head'
+import Image from 'next/image'
 import styles from '../styles/Home.module.css'
+import dynamic from 'next/dynamic'
+import Button from '../components/button'
+
+const TEXTS = [
+    'Drawing',
+    'Editing',
+    'Communication',
+    'Collaboration'
+];
+
+const TextAnimation = dynamic(
+  () => import('../components/TextAnimation'),
+  { ssr: false }
+)
 
 export default function Home() {
-  return (
-    <div className={styles.container}>
-      <Head>
-        <title>Create Next App</title>
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
-
-      <main className={styles.main}>
-        <h1 className={styles.title}>
-          Welcome to <a href="https://nextjs.org">Next.js!</a>
-        </h1>
-
-        <p className={styles.description}>
-          Get started by editing{' '}
-          <code className={styles.code}>pages/index.js</code>
-        </p>
-
-        <div className={styles.grid}>
-          <a href="https://nextjs.org/docs" className={styles.card}>
-            <h3>Documentation &rarr;</h3>
-            <p>Find in-depth information about Next.js features and API.</p>
-          </a>
-
-          <a href="https://nextjs.org/learn" className={styles.card}>
-            <h3>Learn &rarr;</h3>
-            <p>Learn about Next.js in an interactive course with quizzes!</p>
-          </a>
-
-          <a
-            href="https://github.com/vercel/next.js/tree/master/examples"
-            className={styles.card}
-          >
-            <h3>Examples &rarr;</h3>
-            <p>Discover and deploy boilerplate example Next.js projects.</p>
-          </a>
-
-          <a
-            href="https://vercel.com/import?filter=next.js&utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className={styles.card}
-          >
-            <h3>Deploy &rarr;</h3>
-            <p>
-              Instantly deploy your Next.js site to a public URL with Vercel.
-            </p>
-          </a>
+    return (
+        <div className={styles.container}>
+            <Head>
+                <title>Whiteboard</title>
+                <link rel="icon" href="/favicon.ico" />
+            </Head>
+            <header className={styles.header}>
+                <nav className={styles.nav}>
+                    <Button type={'none'} name={'Log In'}/>
+                    <Button type={'solid'} name={'Sign Up'}/>
+                </nav>
+            </header>
+            <main className={styles.main}>
+                <div className={styles.centerpiece}>
+                    <h1 className={styles.title}>
+                       A Tool for
+                    </h1>
+                    <div className={styles.textLoop}>
+                        <TextAnimation texts={TEXTS} styles={styles}/>
+                    </div>
+                    <p className={styles.description}>
+                       Whiteboard provides Editing, Viewing, and Presenting modes for individuals and teams to convey ideas.
+                    </p>
+                    <Button type={'solid'} name={'Get Started'}/>
+                </div>
+            </main>
+            <Image className={styles.background} src="/home-bg.svg" layout="fill"/>
         </div>
-      </main>
-
-      <footer className={styles.footer}>
-        <a
-          href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Powered by{' '}
-          <img src="/vercel.svg" alt="Vercel Logo" className={styles.logo} />
-        </a>
-      </footer>
-    </div>
-  )
+    )
 }
