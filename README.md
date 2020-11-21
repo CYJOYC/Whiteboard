@@ -1,3 +1,5 @@
+
+
 # Whiteboard
 Team Members: Jacqueline Zhang, Joy Chu, Priyanka Goswami, Ryan Qiao, William Zhang
 
@@ -22,3 +24,15 @@ APIs:
 - Feasibility: The two APIs well support your goal and seem easy-to-use. You might face some challenges of incorporating them with React.
 - Scope: The scope is moderate. It just seems that most features have been supported by the AWW API. You might want to think about adding something to it.  
 - Requirements: All satisfied.
+
+### How to Run the App Locally
+First, run `cd nextjs-whiteboard` to enter the directory. Inside that directory, you can run several commands:
+
+`npm run dev`
+- Starts the development server 
+
+`npm run build`
+- Builds the app for production.
+
+`npm start`
+- Runs the built app in production mode. Must run above command in order to run this command.
