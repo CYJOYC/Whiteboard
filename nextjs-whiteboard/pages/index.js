@@ -3,6 +3,7 @@ import Image from 'next/image'
 import styles from '../styles/Home.module.css'
 import dynamic from 'next/dynamic'
 import Button from '../components/button'
+import React, {useState, useEffect} from 'react';
 
 const TEXTS = [
     'Drawing',
@@ -16,7 +17,19 @@ const TextAnimation = dynamic(
   { ssr: false }
 )
 
+const io = require('socket.io-client');
+const socket = io('http://localhost:3000');
+
 export default function Home() {
+    // using hooks to manage sockets
+    const [message, setMessage] = useState('hello');
+
+    useEffect(() => {
+        socket.on('now', data => {
+          setMessage(data.message);
+          console.log('> message received: ', data.message);
+        });
+      }, []); //only re-run the effect if new message comes in
     return (
         <div className={styles.container}>
             <Head>
@@ -31,6 +44,7 @@ export default function Home() {
             </header>
             <main className={styles.main}>
                 <div className={styles.centerpiece}>
+                    <h1>{message}</h1>
                     <h1 className={styles.title}>
                        A Tool for
                     </h1>
