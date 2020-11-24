@@ -6,6 +6,7 @@
 	padding: 5px 30px;
 	height: 35px;
 	margin: 0 10px;
+	cursor: pointer;
 }
 
 .solidButton {
@@ -25,3 +26,10 @@
 	color: #60BCFF;
 	background-color: transparent;
 }
+
+.solidButton:focus,
+.outlineButton:focus,
+.noOutlineButton:focus {
+    outline: none;
+    box-shadow: none;
+} 
