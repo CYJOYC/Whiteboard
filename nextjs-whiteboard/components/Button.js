@@ -12,6 +12,12 @@ export default function Button(props) {
 		case 'none':
 			buttonStyle = styles.noOutlineButton;
 			break;
+		case 'destructive':
+			buttonStyle = styles.destructiveButton;
+			break;
+		default:
+			buttonStyle = styles.outlineButton;
+			break;
 	}
 	return(
 		<button className={buttonStyle} type="button" onClick={props.onClick}>

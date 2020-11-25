@@ -3,7 +3,10 @@ import Image from 'next/image'
 import styles from '../styles/Home.module.css'
 import dynamic from 'next/dynamic'
 import Button from '../components/button'
-import React, {useState, useEffect} from 'react';
+import Popup from '../components/popup'
+import { useState, useEffect } from 'react';
+import { useAuth } from '../hooks/useAuth'
+import { useRouter } from 'next/router';
 
 const TEXTS = [
     'Drawing',
@@ -17,34 +20,60 @@ const TextAnimation = dynamic(
   { ssr: false }
 )
 
-const io = require('socket.io-client');
-const socket = io('http://localhost:3000');
+// const io = require('socket.io-client');
+// const socket = io('http://localhost:3000');
 
-export default function Home() {
+export default function Index(props) {
     // using hooks to manage sockets
-    const [message, setMessage] = useState('hello');
+    // const [message, setMessage] = useState('hello');
 
-    useEffect(() => {
-        socket.on('now', data => {
-          setMessage(data.message);
-          console.log('> message received: ', data.message);
-        });
-      }, []); //only re-run the effect if new message comes in
+    // useEffect(() => {
+    //     socket.on('now', data => {
+    //       setMessage(data.message);
+    //       console.log('> message received: ', data.message);
+    //     });
+    //   }, []); //only re-run the effect if new message comes in
+    const [showLoginPopup, setShowLoginPopup] = useState(false);
+    const [showSignUpPopup, setShowSignUpPopup] = useState(false);
+    const [loading, setLoading] = useState(true);
+
+    const showLogin = () => {
+        // upon clicking on the Login button, this popup will appear, prompting the user to login
+        setShowSignUpPopup(false);
+        setShowLoginPopup(true);
+    }
+
+    const showSignUp = () => {
+        // upon clicking on the Login button, this popup will appear, prompting the user to login
+        setShowLoginPopup(false);
+        setShowSignUpPopup(true);
+    }
+
+    const closePopup = () => {
+        // hides all popups
+        setShowLoginPopup(false);
+        setShowSignUpPopup(false);
+    }
+
+    const auth = useAuth();
+
+    if (auth.user) return null;
+
+
     return (
-        <div className={styles.container}>
+       <div className={styles.container}>
             <Head>
                 <title>Whiteboard</title>
                 <link rel="icon" href="/favicon.ico" />
             </Head>
             <header className={styles.header}>
                 <nav className={styles.nav}>
-                    <Button type={'none'} name={'Log In'}/>
-                    <Button type={'solid'} name={'Sign Up'}/>
+                    <Button type={'none'} name={'Log In'} onClick={showLogin} />
+                    <Button type={'solid'} name={'Sign Up'} onClick={showSignUp} />
                 </nav>
             </header>
             <main className={styles.main}>
                 <div className={styles.centerpiece}>
-                    <h1>{message}</h1>
                     <h1 className={styles.title}>
                        A Tool for
                     </h1>
@@ -58,6 +87,8 @@ export default function Home() {
                 </div>
             </main>
             <Image className={styles.background} src="/home-bg.svg" layout="fill"/>
+            { showLoginPopup ? <Popup closePopup={closePopup} isLogin={true} signUp={showSignUp} /> : null }
+            { showSignUpPopup ? <Popup closePopup={closePopup} isLogin={false} login={showLogin} />  : null }
         </div>
     )
 }
