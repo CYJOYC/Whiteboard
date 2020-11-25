@@ -12,7 +12,7 @@ export default function Dashboard(props) {
     return (
         <div>
             <h1>Welcome {auth.user.name}!</h1>
-            <h2>You are logged in with {auth.user.email}</h2>
+            <h3>You are logged in with {auth.user.email} and have {auth.user.projects.length} projects.</h3>
             <Button onClick={auth.signOut} type={'destructive'} name={'Logout'} />
         </div>
     );
