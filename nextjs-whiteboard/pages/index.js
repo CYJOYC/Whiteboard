@@ -4,9 +4,10 @@ import styles from '../styles/Home.module.css'
 import dynamic from 'next/dynamic'
 import Button from '../components/button'
 import Popup from '../components/popup'
-import { useState, useEffect } from 'react';
-import { useAuth } from '../hooks/useAuth'
-import { useRouter } from 'next/router';
+import { useState, useEffect } from 'react'
+import { useRouter } from 'next/router'
+import { auth } from '../config/firebase'
+import Loader from '../components/loader'
 
 const TEXTS = [
     'Drawing',
@@ -35,7 +36,7 @@ export default function Index(props) {
     //   }, []); //only re-run the effect if new message comes in
     const [showLoginPopup, setShowLoginPopup] = useState(false);
     const [showSignUpPopup, setShowSignUpPopup] = useState(false);
-    const [loading, setLoading] = useState(true);
+    const [load, setLoad] = useState(false);
 
     const showLogin = () => {
         // upon clicking on the Login button, this popup will appear, prompting the user to login
@@ -55,11 +56,15 @@ export default function Index(props) {
         setShowSignUpPopup(false);
     }
 
-    const auth = useAuth();
+    const router = useRouter(); 
+    useEffect(() => {
+        auth.onAuthStateChanged(authUser => {
+            if (authUser) router.push('/dashboard');
+            else setLoad(true);
+        });
+    }, []);
 
-    if (auth.user) return null;
-
-
+    if (!load) return <Loader />;
     return (
        <div className={styles.container}>
             <Head>
