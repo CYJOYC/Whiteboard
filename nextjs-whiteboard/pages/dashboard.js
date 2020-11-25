@@ -1,5 +1,6 @@
 import { useRequireAuth } from '../hooks/useRequireAuth';
 import { useRouter } from 'next/router';
+import Button from '../components/button'
 
 export default function Dashboard(props) {
     const auth = useRequireAuth();
@@ -8,7 +9,7 @@ export default function Dashboard(props) {
         <div>
             <h1>Welcome {auth.user.name}!</h1>
             <h2>You are logged in with {auth.user.email}</h2>
-            <button onClick={auth.signOut}>Logout</button>
+            <Button onClick={auth.signOut} type={'destructive'} name={'Logout'} />
         </div>
     );
 };

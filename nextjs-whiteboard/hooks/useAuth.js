@@ -1,6 +1,5 @@
 import { auth, db } from '../config/firebase';
 import { useState, useEffect, useContext, createContext, ReactNode } from 'react';
-import { useRouter } from 'next/router';
 
 const authContext = createContext({ user: {} });
 const { Provider } = authContext;
@@ -16,7 +15,6 @@ export const useAuth = () => {
 
 const useAuthProvider = () => {
 	const [user, setUser] = useState(null);
-	const router = useRouter();
 
 	const handleAuthStateChanged = (user) => {
 		setUser(user);
