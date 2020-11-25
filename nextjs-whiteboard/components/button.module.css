@@ -38,6 +38,7 @@
 
 .solidButton:focus,
 .outlineButton:focus,
+.noOutlineButton:focus,
 .destructiveButton:focus {
     outline: none;
     box-shadow: none;

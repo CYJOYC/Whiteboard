@@ -4,7 +4,9 @@ import styles from '../styles/Home.module.css'
 import dynamic from 'next/dynamic'
 import Button from '../components/button'
 import Popup from '../components/popup'
-import {useState, useEffect} from 'react';
+import { useState, useEffect } from 'react';
+import { useAuth } from '../hooks/useAuth'
+import { useRouter } from 'next/router';
 
 const TEXTS = [
     'Drawing',
@@ -21,7 +23,7 @@ const TextAnimation = dynamic(
 // const io = require('socket.io-client');
 // const socket = io('http://localhost:3000');
 
-export default function Index() {
+export default function Index(props) {
     // using hooks to manage sockets
     // const [message, setMessage] = useState('hello');
 
@@ -31,9 +33,9 @@ export default function Index() {
     //       console.log('> message received: ', data.message);
     //     });
     //   }, []); //only re-run the effect if new message comes in
-
     const [showLoginPopup, setShowLoginPopup] = useState(false);
     const [showSignUpPopup, setShowSignUpPopup] = useState(false);
+    const [loading, setLoading] = useState(true);
 
     const showLogin = () => {
         // upon clicking on the Login button, this popup will appear, prompting the user to login
@@ -52,6 +54,11 @@ export default function Index() {
         setShowLoginPopup(false);
         setShowSignUpPopup(false);
     }
+
+    const auth = useAuth();
+
+    if (auth.user) return null;
+
 
     return (
        <div className={styles.container}>

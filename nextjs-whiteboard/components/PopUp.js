@@ -1,9 +1,9 @@
-import React from 'react';  
 import styles from './popup.module.css' 
-import { useAuth } from '../hooks/useAuth'
+import { useAuth } from '../hooks/useAuth';
 
 export default function PopUp(props) {
 	const auth = useAuth();
+
 	if (props.isLogin) {
 		return (  
 			<div className={styles.popup}>  
