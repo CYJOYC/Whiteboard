@@ -75,7 +75,17 @@ const useAuthProvider = () => {
 	const getUserAdditionalData = (userId) => {
 		return db.ref('users/' + userId).on('value', (snapshot) => {
 		  	const data = snapshot.val();
-		  	setUser({uid: userId, name: data.name, email: data.email});
+		  	var user = {
+		  		uid: userId, 
+		  		name: data.name, 
+		  		email: data.email
+		  	}
+		  	if ('projects' in data) {
+		  		user['projects'] = data.projects;
+		  	} else {
+		  		user['projects'] = [];
+		  	}
+		  	setUser(user);
 		})
 	}
 
