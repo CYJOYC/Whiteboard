@@ -139,6 +139,12 @@ export default function Dashboard(props) {
                     <GalleryOption key={k} tabIndex={k} name={v} enter={enterGallery} delete={deleteOption}/>)})
                     }
                 </div>
+                
+                <div className={styles.circle1}/>
+                <div className={styles.circle2}/>
+                <div className={styles.circle3}/>
+                
+                
             </main>
 
             {isCreateGallery? <GalleryForm title={"Create a New Gallery"} name={"name"} placeholder={"Board Name"} 
