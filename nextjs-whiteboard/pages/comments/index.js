@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import CommentsBlock from '../../components/Comments/CommentsBlock.js';
 
 import SingleComment from '../../components/Comments/SingleComment.js';
-const testComments = [
+let testComments = [
     {
         authorName: 'Ryan',
         createdAt: '2020-11-28T12:59-0500',
@@ -16,6 +16,6 @@ const testComments = [
     }
 ]
 export default function Project() {
-  return  <CommentsBlock comments={testComments}/>
+  return  <CommentsBlock comments={testComments} user={'Test User'}/>
 }
 

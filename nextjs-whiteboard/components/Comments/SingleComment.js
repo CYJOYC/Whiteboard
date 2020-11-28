@@ -10,14 +10,12 @@ function SingleComment(props) {
   return (
     <Comment>
       <Comment.Content>
+      <Comment.Avatar src='https://react.semantic-ui.com/images/avatar/small/veronika.jpg' />
         <Comment.Author as='a'>{props.comment.authorName}</Comment.Author>
         <Comment.Metadata>
           <Moment fromNow>{props.comment.createdAt}</Moment>
         </Comment.Metadata>
           <Comment.Text>{props.comment.text}</Comment.Text>
-        <Comment.Actions>
-          <Comment.Action>Reply</Comment.Action>
-        </Comment.Actions>
       </Comment.Content>
     </Comment>
   );
