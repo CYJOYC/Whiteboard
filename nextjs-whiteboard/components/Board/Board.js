@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import "../board.module.css";
 import Controls from "../Controls/Controls";
+import { auth, db } from '../../config/firebase';
+
 
 function Board() {
   const canvasRef = React.useRef(null);
@@ -65,6 +67,12 @@ function Board() {
 
     // uncomment this for storing into firebase. I'm not too clear on how to do this-- I assume whoever configured it knows how. 
     // Code comes here: https://stackoverflow.com/questions/37873808/how-can-i-save-canvas-as-image-to-firebase-storage
+
+    
+    canvasRef.current.toBlob(function(blob){
+      db.ref('galleries/' + '0000' + 'testImage').set(blob)
+    }); 
+
     /*
     var storageRef = firebase.storage().ref();
     canvas.toBlob(function(blob){
