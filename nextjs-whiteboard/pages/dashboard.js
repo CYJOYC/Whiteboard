@@ -3,75 +3,80 @@ import { useRouter } from 'next/router';
 import Button from '../components/button';
 import { useState, useEffect } from 'react';
 import Loader from '../components/loader';
-// import ProjectOption from '../components/ProjectOption';
-import ProjectForm from '../components/ProjectForm';
+// import GalleryOption from '../components/GalleryOption';
+import GalleryForm from '../components/GalleryForm';
 import { auth, db } from '../config/firebase';
-import ProjectOption from '../components/ProjectOption';
+import GalleryOption from '../components/GalleryOption';
 import styles from '../styles/dashboard.module.css'
 
 export default function Dashboard(props) {
     const auth = useRequireAuth();
-    const [isCreateProject, setIsCreateProject] = useState(false);
-    const [isEnterRoomCode, setIsEnterRoomCode] = useState(false);
+    const [isCreateGallery, setIsCreateGallery] = useState(false);
+    const [isEnterGalleryCode, setIsEnterGalleryCode] = useState(false);
 
-    const closeProjectForm = () => {
-        setIsCreateProject(false);
-        setIsEnterRoomCode(false);
+    const closeGalleryForm = () => {
+        setIsCreateGallery(false);
+        setIsEnterGalleryCode(false);
     }
 
-    const showCreateProject = () => {
-        setIsCreateProject(true);
-        setIsEnterRoomCode(false);
+    const showCreateGallery = () => {
+        setIsCreateGallery(true);
+        setIsEnterGalleryCode(false);
     }
 
-    const showEnterRoomCode = () => {
-        setIsEnterRoomCode(true);
-        setIsCreateProject(false);
+    const showEnterGalleryCode = () => {
+        setIsEnterGalleryCode(true);
+        setIsCreateGallery(false);
     }
 
-    
+    const updateUserGalleries = (newPostKey, galleryName) => {
+        let newUser = {...auth.user};
+        newUser.galleries = {...newUser.galleries, [newPostKey]: galleryName};
+        auth.setUser(newUser);
+    }
 
-    const enterRoomCode = (event) => {
+    const updateDbUsers = (newPostKey, galleryName) => {
+        let postData = {...auth.user.galleries, [newPostKey]: galleryName};
+        let updates = {};
+        updates['/users/' + auth.user.uid + '/galleries'] = postData;
+        return db.ref().update(updates);     
+    }
+
+    const createGallery = (event) => {
         event.preventDefault();
-        alert(event.target.code.value);
-        // Add to auth.user.projects
-        // Add to db
-    }
+        let galleryName = event.target.name.value;
+        let postData = { name: galleryName };
+        let newPostKey = db.ref().child('galleries').push().key;
+        let updates = {};
+        updates['/galleries/' + newPostKey] = postData;
+        db.ref().update(updates);
 
-    const createProject = (event) => {
-        event.preventDefault();
-        // Update auth.user state
-        let newUser = {...auth.user}
-        newUser.projects = [...newUser.projects, event.target.name.value]
-        auth.setUser(newUser)
-        // Update db users
-        db.ref('users/' + auth.user.uid).set({
-			name: auth.user.name,
-			email: auth.user.email,
-			projects: auth.user.projects
-		}).catch((error) => {
-			console.log(error)
-		    return ;
-        });
-        // Create new db collection "projects"
-        // having PERMISSION_DENIED issue now
-
-
-        // var postData = {
-        //     name: event.target.name.value
-        // };
-
-        // var newPostKey = db.ref().child('projects').push().key;
-        // var updates = {};
-        // updates['/projects/' + newPostKey] = postData;
-        // return db.ref().update(updates);
+        updateUserGalleries(newPostKey, galleryName)
+        updateDbUsers(newPostKey, galleryName)
 
         // Direct to whiteboard page
 
     }
 
-    const enterProject = (event) => {
+    const enterGalleryCode = (event) => {
+        event.preventDefault();
+        let roomCode = event.target.code.value;
+        let roomNameRef = db.ref('galleries/' + roomCode);
+        roomNameRef.on('value', (snapshot) =>{
+            const data = snapshot.val();
+            console.log(data)
+            let galleryName = data.name;
+            updateDbUsers(roomCode, galleryName);
+            updateUserGalleries(roomCode, galleryName);
+        });
+
+        // Direct to whiteboard page
+
+    }
+
+    const enterGallery = (event) => {
         alert(event.target.getAttribute('key'))
+        // Direct to whiteboard page
     }
 
     const deleteOption = (event) => {
@@ -79,34 +84,31 @@ export default function Dashboard(props) {
         alert("delete")
     }
 
-
-
-
     if (!auth.user || !auth.user.name) return <Loader />;
-    // projectOption key to be replaced by project unique id
     return (
         <div className={styles.container}>
             <header className={styles.header}>
                 <nav className={styles.nav}>
-                    <Button onClick={showCreateProject} type={'solid'} name={'Create New Board'} />
-                    <Button onClick={showEnterRoomCode} type={'solid'} name={'Enter Board Code'} />
+                    <Button onClick={showCreateGallery} type={'solid'} name={'Create New Gallery'} />
+                    <Button onClick={showEnterGalleryCode} type={'solid'} name={'Enter Gallery Code'} />
                     <Button onClick={auth.signOut} type={'outline'} name={'Logout'} />
                 </nav>
             </header>
             <main className={styles.main}>
                 <h1>Welcome {auth.user.name}!</h1>
-                <h3>You are logged in with {auth.user.email} and have {auth.user.projects.length} projects.</h3>
-                <div className={styles.projectOptions}>
-                    {auth.user.projects.map((project, index) => {return (<ProjectOption key={index} name={project} 
-                    onClick={enterProject} delete={deleteOption}></ProjectOption>)})}
+                <h3>You are logged in with {auth.user.email} and have {Object.keys(auth.user.galleries).length} galleries.</h3>
+                <div className={styles.galleryOptions}>
+                    {Object.entries(auth.user.galleries).map(([k, v]) => {return (
+                    <GalleryOption key={k} name={v} onClick={enterGallery} delete={deleteOption}/>)})
+                    }
                 </div>
             </main>
 
-            {isCreateProject? <ProjectForm title={"Create a New Board"} name={"name"} placeholder={"Board Name"} 
-            submitvalue={"Create"} onSubmit={createProject} closeProjectForm={closeProjectForm}></ProjectForm>: null}
+            {isCreateGallery? <GalleryForm title={"Create a New Gallery"} name={"name"} placeholder={"Board Name"} 
+            submitvalue={"Create"} onSubmit={createGallery} closeGalleryForm={closeGalleryForm}></GalleryForm>: null}
 
-            {isEnterRoomCode? <ProjectForm title={"Enter a Board Code"} name={"code"} placeholder={"Board Code"} 
-            submitvalue={"Enter"} onSubmit={enterRoomCode} closeProjectForm={closeProjectForm}></ProjectForm>: null}
+            {isEnterGalleryCode? <GalleryForm title={"Enter a Gallery Code"} name={"code"} placeholder={"Board Code"} 
+            submitvalue={"Enter"} onSubmit={enterGalleryCode} closeGalleryForm={closeGalleryForm}></GalleryForm>: null}
             
         </div>
     );

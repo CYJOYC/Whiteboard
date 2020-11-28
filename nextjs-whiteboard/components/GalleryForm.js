@@ -1,12 +1,12 @@
-import styles from './projectform.module.css'
+import styles from './galleryform.module.css'
 // import { dashboard } from './dahsboard';
 import { useRequireAuth } from '../hooks/useRequireAuth';
 // import dahsboard from '../pages/dashboard';
-// import {createProject} from '../pages/dashboard';
+// import {createGallery} from '../pages/dashboard';
 // import { db } from '../config/firebase';
 
 
-export default function ProjectForm(props) {
+export default function GalleryForm(props) {
 
     return (
         <div className={styles.popup}>  
@@ -16,7 +16,7 @@ export default function ProjectForm(props) {
 					 	<input type="text" name={props.name} placeholder={props.placeholder} />
 					  	<input type="submit" value={props.submitvalue} />
 					</form> 
-					<button onClick={props.closeProjectForm}> x </button> 
+					<button onClick={props.closeGalleryForm}> x </button> 
 				</div>  
 		</div>  
     )

@@ -55,9 +55,9 @@ const useAuthProvider = () => {
 		return db.ref('users/' + userId).set({
 			name: name,
 			email: email,
-			projects: []
+			galleries: {}
 		}).then(() => {
-		    setUser({uid: userId, name: name, email: email, projects: []});
+		    setUser({uid: userId, name: name, email: email, galleries: {}});
 		    return user;
 		}).catch((error) => {
 			console.log(error)
@@ -80,10 +80,10 @@ const useAuthProvider = () => {
 		  		name: data.name, 
 		  		email: data.email
 		  	}
-		  	if ('projects' in data) {
-		  		user['projects'] = data.projects;
+		  	if ('galleries' in data) {
+		  		user['galleries'] = data.galleries;
 		  	} else {
-		  		user['projects'] = [];
+		  		user['galleries'] = {};
 		  	}
 		  	setUser(user);
 		})
