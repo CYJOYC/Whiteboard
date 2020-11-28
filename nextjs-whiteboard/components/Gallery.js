@@ -2,6 +2,7 @@ import React from "react";
 
 class Gallery extends React.Component {
   renderImage(imageUrl) {
+    console.log("alkjfe type of imageURL: " + typeof(imageUrl) + imageUrl)
     return (
       <div>
         <img src={imageUrl} />
