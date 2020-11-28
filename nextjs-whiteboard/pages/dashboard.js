@@ -30,9 +30,9 @@ export default function Dashboard(props) {
     }
 
     const updateUserGalleries = (newPostKey, galleryName) => {
-        let newUser = {...auth.user};
-        newUser.galleries = {...newUser.galleries, [newPostKey]: galleryName};
-        auth.setUser(newUser);
+        let newUserData = {...auth.user};
+        newUserData.galleries = {...newUserData.galleries, [newPostKey]: galleryName};
+        auth.setUser(newUserData);
     }
 
     const updateDbUsers = (newPostKey, galleryName) => {
@@ -75,13 +75,34 @@ export default function Dashboard(props) {
     }
 
     const enterGallery = (event) => {
-        alert(event.target.getAttribute('key'))
+        let roomCode = event.target.getAttribute('tabIndex');
+        console.log("parent div")
         // Direct to whiteboard page
     }
 
     const deleteOption = (event) => {
-        // event.stopPropagation();
-        alert("delete")
+        event.stopPropagation();
+        let roomCode = event.target.getAttribute('tabIndex');
+        alert("Are you sure to delete?");
+
+        // update user state
+        let newUserData = {...auth.user};
+        delete newUserData.galleries[roomCode];
+        auth.setUser(newUserData);
+
+        // update to db Users
+        let postData = {...auth.user.galleries};
+        delete postData[roomCode];
+        let updates = {};
+        updates['/users/' + auth.user.uid + '/galleries'] = postData;
+        return db.ref().update(updates);  
+    }
+    const galleryNoun = () => {
+        if (Object.keys(auth.user.galleries).length != 0) {
+            return "galleries";
+        } else {
+            return "gallery";
+        }
     }
 
     if (!auth.user || !auth.user.name) return <Loader />;
@@ -96,10 +117,10 @@ export default function Dashboard(props) {
             </header>
             <main className={styles.main}>
                 <h1>Welcome {auth.user.name}!</h1>
-                <h3>You are logged in with {auth.user.email} and have {Object.keys(auth.user.galleries).length} galleries.</h3>
+                <h3>You are logged in with {auth.user.email} and have {Object.keys(auth.user.galleries).length} {galleryNoun()}.</h3>
                 <div className={styles.galleryOptions}>
                     {Object.entries(auth.user.galleries).map(([k, v]) => {return (
-                    <GalleryOption key={k} name={v} onClick={enterGallery} delete={deleteOption}/>)})
+                    <GalleryOption key={k} tabIndex={k} name={v} enter={enterGallery} delete={deleteOption}/>)})
                     }
                 </div>
             </main>
