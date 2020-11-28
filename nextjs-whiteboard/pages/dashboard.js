@@ -8,11 +8,17 @@ import GalleryForm from '../components/GalleryForm';
 import { auth, db } from '../config/firebase';
 import GalleryOption from '../components/GalleryOption';
 import styles from '../styles/dashboard.module.css'
+import { useGallery } from '../hooks/useGallery';
 
 export default function Dashboard(props) {
     const auth = useRequireAuth();
+    const gallery = useGallery();
     const [isCreateGallery, setIsCreateGallery] = useState(false);
     const [isEnterGalleryCode, setIsEnterGalleryCode] = useState(false);
+
+    useEffect(() => {
+        gallery.setGallery(null);
+    }, [])
 
     const closeGalleryForm = () => {
         setIsCreateGallery(false);
@@ -45,6 +51,10 @@ export default function Dashboard(props) {
     const createGallery = (event) => {
         event.preventDefault();
         let galleryName = event.target.name.value;
+        if (galleryName == "") {
+            alert("Gallery name is required");
+            return;
+        }
         let postData = { name: galleryName };
         let newPostKey = db.ref().child('galleries').push().key;
         let updates = {};
@@ -55,7 +65,7 @@ export default function Dashboard(props) {
         updateDbUsers(newPostKey, galleryName)
 
         // Direct to whiteboard page
-
+        gallery.setGallery(newPostKey);
     }
 
     const enterGalleryCode = (event) => {
@@ -71,32 +81,38 @@ export default function Dashboard(props) {
         });
 
         // Direct to whiteboard page
-
+        gallery.setGallery(roomCode);
     }
 
     const enterGallery = (event) => {
         let roomCode = event.target.getAttribute('tabIndex');
-        console.log("parent div")
+
         // Direct to whiteboard page
+        gallery.setGallery(roomCode);
     }
 
     const deleteOption = (event) => {
         event.stopPropagation();
         let roomCode = event.target.getAttribute('tabIndex');
-        alert("Are you sure to delete?");
+        if (confirm ("Are you sure to delete this gallery?")) {
+            // update user state
+            let newUserData = {...auth.user};
+            delete newUserData.galleries[roomCode];
+            auth.setUser(newUserData);
 
-        // update user state
-        let newUserData = {...auth.user};
-        delete newUserData.galleries[roomCode];
-        auth.setUser(newUserData);
+            // update to db Users
+            let postData = {...auth.user.galleries};
+            delete postData[roomCode];
+            let updates = {};
+            updates['/users/' + auth.user.uid + '/galleries'] = postData;
+            return db.ref().update(updates);  
+        } else {
+            return;
+        }
 
-        // update to db Users
-        let postData = {...auth.user.galleries};
-        delete postData[roomCode];
-        let updates = {};
-        updates['/users/' + auth.user.uid + '/galleries'] = postData;
-        return db.ref().update(updates);  
+        
     }
+
     const galleryNoun = () => {
         if (Object.keys(auth.user.galleries).length != 0) {
             return "galleries";

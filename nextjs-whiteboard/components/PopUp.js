@@ -15,7 +15,7 @@ export default function PopUp(props) {
 					  	<input type="submit" value="Log In" />
 					</form>  
 					<p className={styles.small_text}>Don’t have an account? <button onClick={props.signUp} className={styles.link}>Sign up here</button></p>
-					<button onClick={props.closePopup}> x </button> 
+					<button className={styles.button} onClick={props.closePopup}> x </button> 
 				</div>  
 			</div>  
 		);
@@ -31,7 +31,7 @@ export default function PopUp(props) {
 					  	<input type="submit" value="Create Account" />
 					</form>  
 					<p className={styles.small_text}>Already have an account? <button onClick={props.login} className={styles.link}>Login here</button></p>
-					<button onClick={props.closePopup}> x </button> 
+					<button className={styles.button} onClick={props.closePopup}> x </button> 
 				</div>  
 			</div>  
 		);

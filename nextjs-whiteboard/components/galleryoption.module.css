@@ -1,9 +1,15 @@
-.option{
+.container {
     position: relative;
     width: 200px;
     height: 200px;
-    /* background-color: #60BCFF; */
-    border: 1px solid #60BCFF;
+    margin: 0 10px 10px 0;
+}
+
+.option{
+    width: 200px;
+    height: 200px;
+    background-color: #60BCFF;
+    /* border: 1px solid #60BCFF; */
     border-radius: 5px;
     margin: 0 10px 10px 0;
     cursor: pointer;
@@ -17,18 +23,90 @@
     width: 80%;
     margin: 0 auto;
     color: #000;
+    font-size: 18px;
 }
-/* .option :hover {
-
-} */
 
 .button{
-    width: 20px;
-    height: 20px;
     position: absolute;
     top: 5px;
     right: 5px;
-    z-index: 5;
-  
+    width: 20px;
+    height: 20px;
+    color: #60BCFF;
+    transition: all 0.3s;
+    border-radius: 50%;
+    border: 1px solid rgba(255,255,255,0.5);
+    overflow: hidden;
+    outline:none;
+}
+    
+.button:before{
+    content: '';
+    color: #60BCFF;
+    position: absolute; 
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    background-color: rgba(0,0,0,0.25);
+    transition: all 0.3s;
+    transform: translate(35%,190%) rotate(-30deg);
+    transition-timing-function: cubic-bezier(0.75, 0, 0.125, 1);
+}
+.button:after{
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    color: white;
+    background-color: rgba(0,0,0,0.25);
+    transition: all 0.3s;
+    transform: translate(-35%,-190%) rotate(-30deg);
+    transition-timing-function: cubic-bezier(0.75, 0, 0.125, 1);
+}
 
+.button:before{
+    transition-delay: 0.2s;
+}
+
+.button:hover::before, .button:hover::after{
+    transform: translate(0,0);  
+}
+
+
+
+
+.details {
+    display: none;
+}
+
+.title {
+    display: block;
+    padding-top: 40px;
+    font-size: 16px;
+}
+
+.option:hover ~ .details {
+    display: block;
+    font-size: 16px;
+    color: #60BCFF;
+    position: absolute;
+    bottom: 0px;
+    height: 80px;
+    width: 160px;
+    text-align: center;
+    background-color: white;
+    border-radius: 160px 160px 0 0;
+    left: 50%;
+    transform:translateX(-50%);
+    
+    
+}
+
+.button:hover  ~ .details {
+    display:none;
 }

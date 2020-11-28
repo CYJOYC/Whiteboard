@@ -16,7 +16,7 @@ export default function GalleryForm(props) {
 					 	<input type="text" name={props.name} placeholder={props.placeholder} />
 					  	<input type="submit" value={props.submitvalue} />
 					</form> 
-					<button onClick={props.closeGalleryForm}> x </button> 
+					<button className={styles.button} onClick={props.closeGalleryForm}> x </button> 
 				</div>  
 		</div>  
     )
