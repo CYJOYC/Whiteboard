@@ -3,12 +3,23 @@ import { db } from '../config/firebase';
 import styles from './gallery.module.css';
 import Button from '../components/button';
 import { useRouter } from 'next/router';
+import { useGallery } from '../hooks/useGallery';
+import Loader from '../components/loader';
 
 function Gallery(props) {
-
+  
   const [imageURLs, setimageURLs] = useState([]);
-  const galleryCode = "0000";
   const router = useRouter();
+  const gallery = useGallery();
+  if (!gallery.gallery ) return <Loader />;
+  const galleryCode = router.query.id;
+  let galleryName = null;
+ 
+  let galleryNameRef = db.ref(`galleries/${galleryCode}/name`);
+  galleryNameRef.on('value', (snapshot) => {
+      let data = snapshot.val();
+      galleryName = data;
+  })
 
   var picturesRef = db.ref(`galleries/${galleryCode}/pictures`);
   
@@ -55,11 +66,14 @@ function Gallery(props) {
       query: { galleryCode: galleryCode }
     });
   }
- 
+
+  
+  
   return (
     <div>
       <div className={styles.title}>
-        Gallery Room {galleryCode}
+        {/* Gallery Room {gallery.gallery.galleryName} */}
+        Gallery Room {galleryName}
       </div>
       <div className={styles.newBoardBtn}>
         <Button type={'solid'} name={'New Drawing'} onClick={createBoard} />
@@ -71,7 +85,6 @@ function Gallery(props) {
       </div>
     </div>
   );
-
 }
 
 export default Gallery;

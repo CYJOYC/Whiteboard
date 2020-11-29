@@ -1,4 +1,4 @@
-import { useState, useEffect, useContext, createContext } from 'react';
+import { useState, useContext, createContext } from 'react';
 import { useRouter } from 'next/router';
 
 const galleryContext = createContext({ gallery: {}});
@@ -16,23 +16,5 @@ export const useGallery = () => {
 const useGalleryProvider = () => {
     const [gallery, setGallery] = useState(null);
     const router = useRouter();
-
-
-    useEffect(() => {
-        if (gallery != null) {
-            router.push('/gallery')
-        }
-    }, [gallery])
-
-    const directGalleryPage = (galleryCode) => {
-        setGallery(galleryCode);
-        if (galleryCode) {
-            router.push('/gallery')
-        }
-    }
-
-    return {gallery, setGallery, directGalleryPage};
-
-
-
+    return {gallery, setGallery};
 }
