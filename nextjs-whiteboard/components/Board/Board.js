@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import "../board.module.css";
 import Controls from "../Controls/Controls";
+import { auth, db } from '../../config/firebase';
+
 
 function Board() {
   const canvasRef = React.useRef(null);
@@ -54,6 +56,20 @@ function Board() {
     setColor(color);
   }
 
+  function createGallery(e) {
+    e.preventDefault();
+    var galleriesRef = db.ref("galleries");
+    galleriesRef.push().set({
+      '0000': {
+        'name': 'testing', 
+        'pictures': {
+          
+        }
+      }
+    });
+
+  }
+
   function saveCanvas(e) {
     e.preventDefault(); 
     var dataURL = canvasRef.current.toDataURL();
@@ -65,14 +81,14 @@ function Board() {
 
     // uncomment this for storing into firebase. I'm not too clear on how to do this-- I assume whoever configured it knows how. 
     // Code comes here: https://stackoverflow.com/questions/37873808/how-can-i-save-canvas-as-image-to-firebase-storage
-    /*
-    var storageRef = firebase.storage().ref();
-    canvas.toBlob(function(blob){
-      var image = new Image();
-      image.src = blob;
-      var uploadTask = storageRef.child('images/' + "testing").put(blob);
-    }); 
-    **/
+
+
+    var picturesRef = db.ref("galleries/" + "0000" + "/pictures");
+    picturesRef.push().set({
+      'creator': 'william', //TODO: INSERT USERNAME 
+      'imageURL': dataURL
+    });
+
 
     console.log('The button was clicked.' + dataURL);
   }
@@ -90,6 +106,9 @@ function Board() {
       <div>
         <button onClick={saveCanvas}>
             Save image to board 
+        </button>
+        <button onClick={createGallery}>
+            Create/Reset test gallery 
         </button>
       </div>
     </div>
