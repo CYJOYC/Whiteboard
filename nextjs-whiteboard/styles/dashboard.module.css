@@ -51,6 +51,7 @@
 }
 
 .circle1 {
+    z-index: -1;
     position: absolute;
     bottom: 15%;
     right: 5%;
@@ -73,6 +74,7 @@
 }
 
 .circle2 {
+    z-index: -1;
     position: absolute;
     bottom: 35%;
     right: 35%;
@@ -97,6 +99,7 @@
 }
 
 .circle3 {
+    z-index: -1;
     position: absolute;
     bottom: 5%;
     right: 20%;

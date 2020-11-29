@@ -1,24 +1,24 @@
-import { useRequireAuth } from '../hooks/useRequireAuth';
+import { useRequireAuth } from '../../hooks/useRequireAuth';
 import { useRouter } from 'next/router';
-import Button from '../components/button';
+import Button from '../../components/button';
 import { useState, useEffect } from 'react';
-import Loader from '../components/loader';
+import Loader from '../../components/loader';
 // import GalleryOption from '../components/GalleryOption';
-import GalleryForm from '../components/GalleryForm';
-import { auth, db } from '../config/firebase';
-import GalleryOption from '../components/GalleryOption';
-import styles from '../styles/dashboard.module.css'
-import { useGallery } from '../hooks/useGallery';
+import GalleryForm from '../../components/GalleryForm';
+import { auth, db } from '../../config/firebase';
+import GalleryOption from '../../components/GalleryOption';
+import styles from '../../styles/dashboard.module.css'
+import { useGallery } from '../../hooks/useGallery';
+import PopCode from '../../components/PopCode';
+
 
 export default function Dashboard(props) {
     const auth = useRequireAuth();
     const gallery = useGallery();
+    const router = useRouter();
     const [isCreateGallery, setIsCreateGallery] = useState(false);
     const [isEnterGalleryCode, setIsEnterGalleryCode] = useState(false);
-
-    useEffect(() => {
-        gallery.setGallery(null);
-    }, [])
+    const [isQueryCode, setIsQueryCode] = useState({state: false, code: null});
 
     const closeGalleryForm = () => {
         setIsCreateGallery(false);
@@ -56,53 +56,71 @@ export default function Dashboard(props) {
             return;
         }
         let postData = { name: galleryName };
-        let newPostKey = db.ref().child('galleries').push().key;
+        let galleryCode = db.ref().child('galleries').push().key;
         let updates = {};
-        updates['/galleries/' + newPostKey] = postData;
+        updates['/galleries/' + galleryCode] = postData;
         db.ref().update(updates);
 
-        updateUserGalleries(newPostKey, galleryName)
-        updateDbUsers(newPostKey, galleryName)
+        updateUserGalleries(galleryCode, galleryName)
+        updateDbUsers(galleryCode, galleryName)
 
         // Direct to whiteboard page
-        gallery.setGallery(newPostKey);
+        gallery.setGallery({galleryCode, galleryName});
+        router.push({
+            pathname: '/gallery/[id]',
+            query: { id: galleryCode},
+        })
     }
 
     const enterGalleryCode = (event) => {
         event.preventDefault();
-        let roomCode = event.target.code.value;
-        let roomNameRef = db.ref('galleries/' + roomCode);
+        let galleryCode = event.target.code.value;
+        let roomNameRef = db.ref('galleries/' + galleryCode);
         roomNameRef.on('value', (snapshot) =>{
             const data = snapshot.val();
             console.log(data)
-            let galleryName = data.name;
-            updateDbUsers(roomCode, galleryName);
-            updateUserGalleries(roomCode, galleryName);
+            if (data == null) {
+                alert("The gallery room code is invalid. Please try again.");
+                // router.push('/dashboard');
+            } else {
+                let galleryName = data.name;
+                updateDbUsers(galleryCode, galleryName);
+                updateUserGalleries(galleryCode, galleryName);
+                router.push({
+                    pathname: '/gallery/[id]',
+                    query: { id: galleryCode},
+                })
+            }
         });
-
-        // Direct to whiteboard page
-        gallery.setGallery(roomCode);
     }
 
     const enterGallery = (event) => {
-        let roomCode = event.target.getAttribute('tabIndex');
+        let galleryCode = event.target.getAttribute('tabIndex');
 
-        // Direct to whiteboard page
-        gallery.setGallery(roomCode);
+        let galleryNameRef = db.ref(`galleries/${galleryCode}/name`);
+        galleryNameRef.on('value', (snapshot) => {
+            let data = snapshot.val();
+            let galleryName = data;
+            gallery.setGallery({galleryCode, galleryName});
+        })
+        router.push({
+            pathname: '/gallery/[id]',
+            query: { id: galleryCode},
+        })
     }
 
     const deleteOption = (event) => {
         event.stopPropagation();
-        let roomCode = event.target.getAttribute('tabIndex');
+        let galleryCode = event.target.getAttribute('tabIndex');
         if (confirm ("Are you sure to delete this gallery?")) {
             // update user state
             let newUserData = {...auth.user};
-            delete newUserData.galleries[roomCode];
+            delete newUserData.galleries[galleryCode];
             auth.setUser(newUserData);
 
             // update to db Users
             let postData = {...auth.user.galleries};
-            delete postData[roomCode];
+            delete postData[galleryCode];
             let updates = {};
             updates['/users/' + auth.user.uid + '/galleries'] = postData;
             return db.ref().update(updates);  
@@ -121,6 +139,15 @@ export default function Dashboard(props) {
         }
     }
 
+    const getCode = (event) => {
+        event.stopPropagation();
+        setIsQueryCode({state: true, code: event.target.getAttribute('tabIndex')});
+    }
+
+    const closePopCode = () => {
+        setIsQueryCode({state: false, code: null});
+    }
+
     if (!auth.user || !auth.user.name) return <Loader />;
     return (
         <div className={styles.container}>
@@ -136,7 +163,8 @@ export default function Dashboard(props) {
                 <h3>You are logged in with {auth.user.email} and have {Object.keys(auth.user.galleries).length} {galleryNoun()}.</h3>
                 <div className={styles.galleryOptions}>
                     {Object.entries(auth.user.galleries).map(([k, v]) => {return (
-                    <GalleryOption key={k} tabIndex={k} name={v} enter={enterGallery} delete={deleteOption}/>)})
+                    <GalleryOption key={k} tabIndex={k} name={v} enter={enterGallery} delete={deleteOption}
+                    getCode={getCode}/>)})
                     }
                 </div>
                 
@@ -147,12 +175,13 @@ export default function Dashboard(props) {
                 
             </main>
 
-            {isCreateGallery? <GalleryForm title={"Create a New Gallery"} name={"name"} placeholder={"Board Name"} 
+            {isCreateGallery? <GalleryForm title={"Create a New Gallery"} name={"name"} placeholder={"Gallery Name"} 
             submitvalue={"Create"} onSubmit={createGallery} closeGalleryForm={closeGalleryForm}></GalleryForm>: null}
 
-            {isEnterGalleryCode? <GalleryForm title={"Enter a Gallery Code"} name={"code"} placeholder={"Board Code"} 
+            {isEnterGalleryCode? <GalleryForm title={"Enter a Gallery Code"} name={"code"} placeholder={"Gallery Code"} 
             submitvalue={"Enter"} onSubmit={enterGalleryCode} closeGalleryForm={closeGalleryForm}></GalleryForm>: null}
             
+            {isQueryCode.state? <PopCode code={isQueryCode.code} closePopCode={closePopCode}></PopCode>: null}
         </div>
     );
 };
