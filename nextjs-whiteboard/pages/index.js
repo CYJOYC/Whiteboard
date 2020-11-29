@@ -11,8 +11,8 @@ import Loader from '../components/loader'
 
 const TEXTS = [
     'Drawing',
-    'Editing',
-    'Communication',
+    'Viewing',
+    'Sharing',
     'Collaboration'
 ];
 
@@ -50,10 +50,12 @@ export default function Index(props) {
         setShowSignUpPopup(true);
     }
 
-    const closePopup = () => {
+    const closePopup = (event) => {
         // hides all popups
-        setShowLoginPopup(false);
-        setShowSignUpPopup(false);
+        if (event.target.id === "close" || event.target.id === "outer") {
+            setShowLoginPopup(false);
+            setShowSignUpPopup(false);
+        }
     }
 
     const router = useRouter(); 
@@ -86,9 +88,9 @@ export default function Index(props) {
                         <TextAnimation texts={TEXTS} styles={styles}/>
                     </div>
                     <p className={styles.description}>
-                       Whiteboard provides Editing, Viewing, and Presenting modes for individuals and teams to convey ideas.
+                       Whiteboard allows users to create their own galleries, where they can unleash their creativity via our drawing functionality and share their creations.
                     </p>
-                    <Button type={'solid'} name={'Get Started'}/>
+                    <Button type={'solid'} name={'Get Started'} onClick={showSignUp}/>
                 </div>
             </main>
             <Image className={styles.background} src="/home-bg.svg" layout="fill"/>

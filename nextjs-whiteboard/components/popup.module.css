@@ -51,51 +51,16 @@
 
 
 .button{
-    position: relative;
+    position: absolute;
+    top: 25px;
+    right: 25px;
     width: 20px;
     height: 20px;
-    color: #60BCFF;
-    transition: all 0.3s;
-    border-radius: 50%;
-    border: 1px solid rgba(255,255,255,0.5);
-    overflow: hidden;
-    outline:none;
-    margin-top: 30px;
+    color: black;
+    font-size: 25px;
+    background-color: transparent;
+    border: none ;
+    outline: none;
+    cursor: pointer;
 }
     
-.button:before{
-    content: '';
-    color: #60BCFF;
-    position: absolute; 
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 1;
-    background-color: rgba(0,0,0,0.25);
-    transition: all 0.3s;
-    transform: translate(35%,190%) rotate(-30deg);
-    transition-timing-function: cubic-bezier(0.75, 0, 0.125, 1);
-}
-.button:after{
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 1;
-    color: white;
-    background-color: rgba(0,0,0,0.25);
-    transition: all 0.3s;
-    transform: translate(-35%,-190%) rotate(-30deg);
-    transition-timing-function: cubic-bezier(0.75, 0, 0.125, 1);
-}
-
-.button:before{
-    transition-delay: 0.2s;
-}
-
-.button:hover::before, .button:hover::after{
-    transform: translate(0,0);  
-}

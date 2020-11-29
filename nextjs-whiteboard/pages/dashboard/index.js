@@ -86,6 +86,7 @@ export default function Dashboard(props) {
                 let galleryName = data.name;
                 updateDbUsers(galleryCode, galleryName);
                 updateUserGalleries(galleryCode, galleryName);
+                gallery.setGallery({galleryCode, galleryName});
                 router.push({
                     pathname: '/gallery/[id]',
                     query: { id: galleryCode},
