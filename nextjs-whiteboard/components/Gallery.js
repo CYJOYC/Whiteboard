@@ -62,7 +62,7 @@ function Gallery(props) {
 
   function createBoard() {
     router.push({
-      pathname: 'whiteboard',
+      pathname: '/whiteboard',
       query: { galleryCode: galleryCode }
     });
   }
