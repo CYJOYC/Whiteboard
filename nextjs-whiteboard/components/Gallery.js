@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { auth, db } from '../config/firebase';
+import styles from './gallery.module.css';
 
 function Gallery() {
 
@@ -38,7 +39,7 @@ function Gallery() {
 
   function renderImage(imageUrl) {
     return (
-      <div>
+      <div className={styles.card}>
         <img src={imageUrl['imageURL']} />
         <figcaption>Created by {imageUrl['creator']}</figcaption>
       </div>
@@ -48,8 +49,8 @@ function Gallery() {
 
   
   return (
-    <div className="gallery">
-      <div className="images">
+    <div className={styles.gallery}>
+      <div className={styles.images}>
         {imageURLs.map(imageUrl => renderImage(imageUrl))}
       </div>
     </div>
