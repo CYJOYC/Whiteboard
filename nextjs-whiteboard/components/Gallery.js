@@ -33,7 +33,6 @@ function Gallery() {
   // let imageURLs = ['https://homepages.cae.wisc.edu/~ece533/images/fruits.png','https://homepages.cae.wisc.edu/~ece533/images/peppers.png']
   
   function arraysEqual(a1,a2) {
-    /* WARNING: arrays must not contain {objects} or behavior may be undefined */
     return JSON.stringify(a1)==JSON.stringify(a2);
   }
 
@@ -61,29 +60,3 @@ function Gallery() {
 
 export default Gallery;
 
-// import React from "react";
-
-// class Gallery extends React.Component {
-//   renderImage(imageUrl) {
-//     console.log("alkjfe type of imageURL: " + typeof(imageUrl) + imageUrl)
-//     return (
-//       <div>
-//         <img src={imageUrl} />
-//       </div>
-//     );
-//   }
-
-//   render() {
-//     return (
-//       <div className="gallery">
-//         <div className="images">
-//           {this.props.imageUrls.map(imageUrl => this.renderImage(imageUrl))}
-//         </div>
-//       </div>
-//     );
-//   }
-// }
-// // Gallery.propTypes = {
-// //   imageUrls: React.PropTypes.arrayOf(React.PropTypes.string).isRequired
-// // };
-// export default Gallery;
