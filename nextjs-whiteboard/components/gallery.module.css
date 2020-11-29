@@ -1,5 +1,19 @@
+.title {
+	text-align: center;
+	margin-top: 50px;
+	line-height: 1.15;
+    font-weight: 800;
+    font-size: 32px;
+}
+
+.newBoardBtn {
+	position: absolute;
+	right: 50px;
+	top: 50px;
+}
+
 .gallery {
-	margin: 25px 100px;
+	margin: 25px 50px;
 }
 
 .images {

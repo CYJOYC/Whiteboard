@@ -107,12 +107,12 @@
     "@firebase/util" "0.3.4"
     "tslib" "^1.11.1"
 
-"@firebase/app-types@0.6.1", "@firebase/app-types@0.x":
+"@firebase/app-types@0.6.1":
   "integrity" "sha512-L/ZnJRAq7F++utfuoTKX4CLBG5YR7tFO3PLzG1/oXXKEezJ0kRL3CMRoueBEmTCzVb/6SIs2Qlaw++uDgi5Xyg=="
   "resolved" "https://registry.npmjs.org/@firebase/app-types/-/app-types-0.6.1.tgz"
   "version" "0.6.1"
 
-"@firebase/app@0.6.13", "@firebase/app@0.x":
+"@firebase/app@0.6.13":
   "integrity" "sha512-xGrJETzvCb89VYbGSHFHCW7O/y067HRxT7MGehUE1xMxdPVBDNayHnxEuKwzfGvXAjVmajXBKFlKxaCWpgSjCQ=="
   "resolved" "https://registry.npmjs.org/@firebase/app/-/app-0.6.13.tgz"
   "version" "0.6.13"
@@ -302,7 +302,7 @@
     "@firebase/util" "0.3.4"
     "tslib" "^1.11.1"
 
-"@firebase/util@0.3.4", "@firebase/util@0.x":
+"@firebase/util@0.3.4":
   "integrity" "sha512-VwjJUE2Vgr2UMfH63ZtIX9Hd7x+6gayi6RUXaTqEYxSbf/JmehLmAEYSuxS/NckfzAXWeGnKclvnXVibDgpjQQ=="
   "resolved" "https://registry.npmjs.org/@firebase/util/-/util-0.3.4.tgz"
   "version" "0.3.4"
@@ -313,6 +313,32 @@
   "integrity" "sha512-0yPjzuzGMkW1GkrC8yWsiN7vt1OzkMIi9HgxRmKREZl2wnNPOKo/yScTjXf/O57HM8dltqxPF6jlNLFVtc2qdw=="
   "resolved" "https://registry.npmjs.org/@firebase/webchannel-wrapper/-/webchannel-wrapper-0.4.1.tgz"
   "version" "0.4.1"
+
+"@fortawesome/fontawesome-common-types@^0.2.32":
+  "integrity" "sha512-ux2EDjKMpcdHBVLi/eWZynnPxs0BtFVXJkgHIxXRl+9ZFaHPvYamAfCzeeQFqHRjuJtX90wVnMRaMQAAlctz3w=="
+  "resolved" "https://registry.npmjs.org/@fortawesome/fontawesome-common-types/-/fontawesome-common-types-0.2.32.tgz"
+  "version" "0.2.32"
+
+"@fortawesome/fontawesome-svg-core@^1.2.32":
+  "integrity" "sha512-XjqyeLCsR/c/usUpdWcOdVtWFVjPbDFBTQkn2fQRrWhhUoxriQohO2RWDxLyUM8XpD+Zzg5xwJ8gqTYGDLeGaQ=="
+  "resolved" "https://registry.npmjs.org/@fortawesome/fontawesome-svg-core/-/fontawesome-svg-core-1.2.32.tgz"
+  "version" "1.2.32"
+  dependencies:
+    "@fortawesome/fontawesome-common-types" "^0.2.32"
+
+"@fortawesome/free-solid-svg-icons@^5.15.1":
+  "integrity" "sha512-EFMuKtzRMNbvjab/SvJBaOOpaqJfdSap/Nl6hst7CgrJxwfORR1drdTV6q1Ib/JVzq4xObdTDcT6sqTaXMqfdg=="
+  "resolved" "https://registry.npmjs.org/@fortawesome/free-solid-svg-icons/-/free-solid-svg-icons-5.15.1.tgz"
+  "version" "5.15.1"
+  dependencies:
+    "@fortawesome/fontawesome-common-types" "^0.2.32"
+
+"@fortawesome/react-fontawesome@^0.1.13":
+  "integrity" "sha512-/HrLnIft5Ks2511Pz6TxHBIctC9QalVscAC64sufQ4sJH/sXaQlG3uR9LCu6VpEwkBemgcBLrz/QPNP/ddbjDg=="
+  "resolved" "https://registry.npmjs.org/@fortawesome/react-fontawesome/-/react-fontawesome-0.1.13.tgz"
+  "version" "0.1.13"
+  dependencies:
+    "prop-types" "^15.7.2"
 
 "@grpc/grpc-js@^1.0.0":
   "integrity" "sha512-JpGh2CgqnwVII0S9TMEX3HY+PkLJnb7HSAar3Md1Y3aWxTZqAGb7gTrNyBWn/zueaGFsMYRm2u/oYufWFYVoIQ=="
@@ -350,6 +376,11 @@
   "integrity" "sha512-i9YbZPN3QgfighY/1X1Pu118VUz2Fmmhd6b2n0/O8YVgGGfw0FbUYoA97k7FkpGJ+pLCFEDLUmAPPV4D1kpeFw=="
   "resolved" "https://registry.npmjs.org/@hapi/hoek/-/hoek-9.1.0.tgz"
   "version" "9.1.0"
+
+"@icons/material@^0.2.4":
+  "integrity" "sha512-QPcGmICAPbGLGb6F/yNf/KzKqvFx8z5qx3D1yFqVAjoFmXK35EgyW+cJ57Te3CNsmzblwtzakLGFqHPqrfb4Tw=="
+  "resolved" "https://registry.npmjs.org/@icons/material/-/material-0.2.4.tgz"
+  "version" "0.2.4"
 
 "@next/env@10.0.2":
   "integrity" "sha512-1fMsLplRXJjSmOfdaeP91fbTgnsbmZSvX6BjeKXSksccg5JT9W1XkOCerTrbQLpUNZIi0sVfwBrHrwJRMCqGBA=="
@@ -2975,6 +3006,11 @@
   dependencies:
     "p-locate" "^4.1.0"
 
+"lodash-es@^4.17.15":
+  "integrity" "sha512-rlrc3yU3+JNOpZ9zj5pQtxnx2THmvRykwL4Xlxoa8I9lHBlVbbyPhgyPMioxVZ4NqyxaVVtaJnzsyOidQIhyyQ=="
+  "resolved" "https://registry.npmjs.org/lodash-es/-/lodash-es-4.17.15.tgz"
+  "version" "4.17.15"
+
 "lodash.camelcase@^4.3.0":
   "integrity" "sha1-soqmKIorn8ZRA1x3EfZathkDMaY="
   "resolved" "https://registry.npmjs.org/lodash.camelcase/-/lodash.camelcase-4.3.0.tgz"
@@ -2985,7 +3021,7 @@
   "resolved" "https://registry.npmjs.org/lodash.sortby/-/lodash.sortby-4.7.0.tgz"
   "version" "4.7.0"
 
-"lodash@^4.17.11", "lodash@^4.17.13":
+"lodash@^4.0.1", "lodash@^4.17.11", "lodash@^4.17.13", "lodash@^4.17.15":
   "integrity" "sha512-PlhdFcillOINfeV7Ni6oF1TAEayyZBoZ8bcshTHqOYJYlrqzRK5hagpagky5o4HfCzzd1TRkXPMFq6cKk9rGmA=="
   "resolved" "https://registry.npmjs.org/lodash/-/lodash-4.17.20.tgz"
   "version" "4.17.20"
@@ -3042,6 +3078,11 @@
   "version" "1.0.0"
   dependencies:
     "object-visit" "^1.0.0"
+
+"material-colors@^1.2.1":
+  "integrity" "sha512-6qE4B9deFBIa9YSpOc9O0Sgc43zTeVYbgDT5veRKSlB2+ZuHNoVVxA1L/ckMUayV9Ay9y7Z/SZCLcGteW9i7bg=="
+  "resolved" "https://registry.npmjs.org/material-colors/-/material-colors-1.2.6.tgz"
+  "version" "1.2.6"
 
 "md5.js@^1.3.4":
   "integrity" "sha512-xitP+WxNPcTTOgnTJcrhM0xvdPepipPSf3I8EIpGKeFLjt3PlJLIDG3u8EX53ZIubkb+5U2+3rELYpEhHhzdkg=="
@@ -3819,7 +3860,7 @@
   "resolved" "https://registry.npmjs.org/promise-polyfill/-/promise-polyfill-8.1.3.tgz"
   "version" "8.1.3"
 
-"prop-types@^15.5.8", "prop-types@15.7.2":
+"prop-types@^15.5.10", "prop-types@^15.5.8", "prop-types@^15.7.2", "prop-types@15.7.2":
   "integrity" "sha512-8QQikdH7//R2vurIJSutZ1smHYTcLpRWEOlHnzcWHmBYrOGUysKwSsrC89BCiFj3CbrfJ/nXFdJepOVrY1GCHQ=="
   "resolved" "https://registry.npmjs.org/prop-types/-/prop-types-15.7.2.tgz"
   "version" "15.7.2"
@@ -3984,6 +4025,19 @@
     "minimist" "^1.2.0"
     "strip-json-comments" "~2.0.1"
 
+"react-color@^2.19.3":
+  "integrity" "sha512-LEeGE/ZzNLIsFWa1TMe8y5VYqr7bibneWmvJwm1pCn/eNmrabWDh659JSPn9BuaMpEfU83WTOJfnCcjDZwNQTA=="
+  "resolved" "https://registry.npmjs.org/react-color/-/react-color-2.19.3.tgz"
+  "version" "2.19.3"
+  dependencies:
+    "@icons/material" "^0.2.4"
+    "lodash" "^4.17.15"
+    "lodash-es" "^4.17.15"
+    "material-colors" "^1.2.1"
+    "prop-types" "^15.5.10"
+    "reactcss" "^1.2.0"
+    "tinycolor2" "^1.4.1"
+
 "react-dom@^17.0.1":
   "integrity" "sha512-6eV150oJZ9U2t9svnsspTMrWNyHc6chX0KzDeAOXftRa8bNeOKTTfCJ7KorIwenkHd2xqVTBTCZd79yk/lx/Ug=="
   "resolved" "https://registry.npmjs.org/react-dom/-/react-dom-17.0.1.tgz"
@@ -4033,6 +4087,13 @@
   dependencies:
     "loose-envify" "^1.1.0"
     "object-assign" "^4.1.1"
+
+"reactcss@^1.2.0":
+  "integrity" "sha512-KiwVUcFu1RErkI97ywr8nvx8dNOpT03rbnma0SSalTYjkrPYaEajR4a/MRt6DZ46K6arDRbWMNHF+xH7G7n/8A=="
+  "resolved" "https://registry.npmjs.org/reactcss/-/reactcss-1.2.3.tgz"
+  "version" "1.2.3"
+  dependencies:
+    "lodash" "^4.0.1"
 
 "readable-stream@^2.0.0":
   "integrity" "sha512-Ebho8K4jIbHAxnuxi7o42OrZgF/ZTNcsZj6nRKyUmkhLFq8CHItp/fy6hQZuZmP/n3yZ9VBUbp4zz/mX8hmYPw=="
@@ -4869,6 +4930,11 @@
   "version" "2.0.12"
   dependencies:
     "setimmediate" "^1.0.4"
+
+"tinycolor2@^1.4.1":
+  "integrity" "sha512-vJhccZPs965sV/L2sU4oRQVAos0pQXwsvTLkWYdqJ+a8Q5kPFzJTuOFwy7UniPli44NKQGAglksjvOcpo95aZA=="
+  "resolved" "https://registry.npmjs.org/tinycolor2/-/tinycolor2-1.4.2.tgz"
+  "version" "1.4.2"
 
 "to-arraybuffer@^1.0.0":
   "integrity" "sha1-fSKbH8xjfkZsoIEYCDanqr/4P0M="
