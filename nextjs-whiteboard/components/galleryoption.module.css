@@ -1,57 +1,35 @@
-.popup {  
-    position: fixed;  
-    width: 100vw;  
-    height: 100vh;  
-    top: 0;  
-    left: 0;  
-    right: 0;  
-    bottom: 0;  
-    margin: auto; 
-    background-color: rgba(0,0,0, 0.5);  
-    z-index: 10;
-}  
-
-.popup_inner {  
-    position: absolute;  
-    left: 25%;  
-    right: 25%;
-    top: 10%;  
-    bottom: 10%;  
-    margin: auto;  
-    background: white;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    overflow: scroll;
+.container {
+    position: relative;
+    width: 200px;
+    height: 200px;
+    margin: 0 10px 10px 0;
 }
 
-.small_text {
-    font-size: 12px;
-    font-weight: 400;
-}
-
-.link {
-    font-family: Open Sans, sans-serif;
-    font-weight: 700;
-    color: #60BCFF;
-    background-color: transparent;
-    border: none;
+.option{
+    width: 200px;
+    height: 200px;
+    background-color: #60BCFF;
+    /* border: 1px solid #60BCFF; */
+    border-radius: 5px;
+    margin: 0 10px 10px 0;
     cursor: pointer;
 }
 
-.link:focus {
-    outline: none;
-    box-shadow: none;
-} 
-
-.form {
-    width: 75%;
+.galleryName {
+    position: relative;
+    top:50%;
+    transform:translateY(-50%);
+    text-align: center;
+    width: 80%;
+    margin: 0 auto;
+    color: #000;
+    font-size: 18px;
 }
 
-
 .button{
-    position: relative;
+    position: absolute;
+    top: 5px;
+    right: 5px;
     width: 20px;
     height: 20px;
     color: #60BCFF;
@@ -60,7 +38,6 @@
     border: 1px solid rgba(255,255,255,0.5);
     overflow: hidden;
     outline:none;
-    margin-top: 30px;
 }
     
 .button:before{
@@ -98,4 +75,38 @@
 
 .button:hover::before, .button:hover::after{
     transform: translate(0,0);  
+}
+
+
+
+
+.details {
+    display: none;
+}
+
+.title {
+    display: block;
+    padding-top: 40px;
+    font-size: 16px;
+}
+
+.option:hover ~ .details {
+    display: block;
+    font-size: 16px;
+    color: #60BCFF;
+    position: absolute;
+    bottom: 0px;
+    height: 80px;
+    width: 160px;
+    text-align: center;
+    background-color: white;
+    border-radius: 160px 160px 0 0;
+    left: 50%;
+    transform:translateX(-50%);
+    
+    
+}
+
+.button:hover  ~ .details {
+    display:none;
 }

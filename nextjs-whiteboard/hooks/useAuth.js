@@ -34,11 +34,11 @@ const useAuthProvider = () => {
 	const signUp = (event) => {
 		event.preventDefault();
 		auth.createUserWithEmailAndPassword(event.target.email.value, event.target.password.value).then((response) => {
-				router.push('/dashboard');
-				createUser(response.user.uid, event.target.name.value, event.target.email.value);
-			}).catch((error) => {
-	    		alert(error.message)
-			});
+			createUser(response.user.uid, event.target.name.value, event.target.email.value);	
+			router.push('/dashboard');
+		}).catch((error) => {
+	    	alert(error.message)
+		});
 	};
 
 	const signIn = (event) => {
@@ -55,9 +55,9 @@ const useAuthProvider = () => {
 		return db.ref('users/' + userId).set({
 			name: name,
 			email: email,
-			projects: []
+			galleries: {}
 		}).then(() => {
-		    setUser({uid: userId, name: name, email: email});
+		    setUser({uid: userId, name: name, email: email, galleries: {}});
 		    return user;
 		}).catch((error) => {
 			console.log(error)
@@ -80,16 +80,16 @@ const useAuthProvider = () => {
 		  		name: data.name, 
 		  		email: data.email
 		  	}
-		  	if ('projects' in data) {
-		  		user['projects'] = data.projects;
+		  	if ('galleries' in data) {
+		  		user['galleries'] = data.galleries;
 		  	} else {
-		  		user['projects'] = [];
+		  		user['galleries'] = {};
 		  	}
 		  	setUser(user);
 		})
 	}
 
-	return { user, signUp, signIn, signOut };
+	return { user, setUser, signUp, signIn, signOut };
 };
 
 

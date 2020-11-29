@@ -24,29 +24,12 @@
     justify-content: center;
     align-items: center;
     overflow: scroll;
+    
 }
-
-.small_text {
-    font-size: 12px;
-    font-weight: 400;
-}
-
-.link {
-    font-family: Open Sans, sans-serif;
-    font-weight: 700;
-    color: #60BCFF;
-    background-color: transparent;
-    border: none;
-    cursor: pointer;
-}
-
-.link:focus {
-    outline: none;
-    box-shadow: none;
-} 
 
 .form {
     width: 75%;
+    margin: 10px 0px;
 }
 
 
