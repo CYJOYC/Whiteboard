@@ -89,6 +89,9 @@ function Board() {
       'imageURL': dataURL
     });
 
+    const context = canvasRef.current.getContext('2d');
+
+    context.clearRect(0, 0, canvasRef.current.width, canvasRef.current.height);
 
     console.log('The button was clicked.' + dataURL);
   }
