@@ -66,10 +66,7 @@ export default function Dashboard(props) {
 
         // Direct to whiteboard page
         // gallery.setGallery({galleryCode, galleryName});
-        router.push({
-            pathname: '/gallery/[id]',
-            query: { id: galleryCode},
-        })
+        router.push(`/gallery/${galleryCode}`)
     }
 
     const enterGalleryCode = (event) => {
@@ -87,10 +84,7 @@ export default function Dashboard(props) {
                 updateDbUsers(galleryCode, galleryName);
                 updateUserGalleries(galleryCode, galleryName);
                 // gallery.setGallery({galleryCode, galleryName});
-                router.push({
-                    pathname: '/gallery/[id]',
-                    query: { id: galleryCode},
-                })
+                router.push(`/gallery/${galleryCode}`)
             }
         });
     }
@@ -104,10 +98,7 @@ export default function Dashboard(props) {
             let galleryName = data;
             // gallery.setGallery({galleryCode, galleryName});
         })
-        router.push({
-            pathname: '/gallery/[id]',
-            query: { id: galleryCode},
-        })
+        router.push(`/gallery/${galleryCode}`)
     }
 
     const deleteOption = (event) => {
