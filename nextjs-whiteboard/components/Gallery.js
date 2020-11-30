@@ -5,9 +5,13 @@ import Button from '../components/button';
 import { useRouter } from 'next/router';
 import { useGallery } from '../hooks/useGallery';
 import Loader from '../components/loader';
+import Modal from 'react-modal';
+import CommentsBlock from './Comments/CommentsBlock.js';
+import { useRequireAuth } from '.././hooks/useRequireAuth';
 
 function Gallery(props) {
-  
+  const auth = useRequireAuth();
+  const user = auth.user;
   const [imageURLs, setimageURLs] = useState([]);
   const router = useRouter();
   const gallery = useGallery();
@@ -24,8 +28,10 @@ function Gallery(props) {
   var picturesRef = db.ref(`galleries/${galleryCode}/pictures`);
   
   let json = {}
+
   picturesRef.on("value", function(snapshot) {
     json = snapshot.val();
+    console.log(snapshot.key);
 
     let test = []
     for (let element in json) {
@@ -52,13 +58,16 @@ function Gallery(props) {
   }
 
   function renderImage(imageUrl) {
+    console.log(imageUrl);
     return (
       <div className={styles.card}>
-        <img src={imageUrl['imageURL']} />
+        <img src={imageUrl['imageURL']}/>
         <figcaption>Created by {imageUrl['creator']}</figcaption>
+        <CommentsBlock comments={imageUrl['comments']} user={user.name}/>
       </div>
     );
   }
+
 
   function createBoard() {
     router.push({
