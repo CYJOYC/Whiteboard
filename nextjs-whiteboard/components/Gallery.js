@@ -6,35 +6,37 @@ import { useGallery } from '../hooks/useGallery';
 import Loader from '../components/loader';
 import Modal from 'react-modal';
 import CommentsBlock from './Comments/CommentsBlock.js';
-import { useRequireAuth } from '.././hooks/useRequireAuth';
+import { useAuth } from '.././hooks/useAuth';
 
 function arraysEqual(a1,a2) {
   return JSON.stringify(a1)==JSON.stringify(a2);
 }
 
 function Gallery(props) {
+  const auth = useAuth();
   const [imageURLs, setimageURLs] = useState([]);
   // const router = useRouter();
   // const gallery = useGallery();
   // if (!gallery.gallery ) return <Loader />;
   // const galleryCode = router.query.id;
   let galleryName = props.data.name;
-  let picturesTemp = []
+  let picturesTemp = [];
   for (let element in props.data.pictures) {
-    picturesTemp.push(props.data.pictures[element])
+    let image = props.data.pictures[element];
+    image['picId'] = element;
+    picturesTemp.push(image)
   }
-  
+
   if (!arraysEqual(picturesTemp, imageURLs)) {
     setimageURLs(picturesTemp)
   }
 
   function renderImage(imageUrl) {
-    console.log(imageUrl);
     return (
       <div className={styles.card}>
         <img src={imageUrl['imageURL']}/>
         <figcaption>Created by {imageUrl['creator']}</figcaption>
-        <CommentsBlock comments={imageUrl['comments']} user={user.name}/>
+        <CommentsBlock comments={imageUrl['comments']} user={auth.user.name} picId={imageUrl['picId']}/>
       </div>
     );
   }
@@ -48,7 +50,7 @@ function Gallery(props) {
   }
 
   
-  
+  if (!auth.user || !auth.user.name) return <Loader />;
   return (
     <div>
       <div className={styles.title}>
@@ -59,7 +61,7 @@ function Gallery(props) {
       </div>
       <div className={styles.gallery}>
         <div className={styles.images}>
-          {imageURLs.map(imageUrl => renderImage(imageUrl))}
+          {imageURLs.map((imageUrl) => renderImage(imageUrl))}
         </div>
       </div>
     </div>
