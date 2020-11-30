@@ -7,7 +7,7 @@ import { db } from '../../config/firebase';
 export default function Project(props) {
 	const auth = useAuth();
 	return <React.StrictMode>
-		<Gallery data={props.data}/>
+		<Gallery data={props.data} code={props.galleryCode}/>
 	</React.StrictMode>
 }
 
@@ -46,7 +46,8 @@ export async function getStaticProps(context) {
 
 	return {
 		props: {
-			data
+			data,
+			galleryCode
 		}, // will be passed to the page component as props
 	}
 }
