@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from "react";
-import "../board.module.css";
+import styles from  "./Board.module.css";
+import { useRouter } from 'next/router';
 import Controls from "../Controls/Controls";
 import { auth, db } from '../../config/firebase';
+import { useAuth } from '../../hooks/useAuth';
+import Button from '../../components/button';
 
 
 function Board() {
@@ -12,6 +15,11 @@ function Board() {
   const [drawing, setDrawing] = useState(false);
   const [position, setPosition] = useState({ x: 0, y: 0 });
   const [color, setColor] = useState("#000000");
+  const router = useRouter();
+  const galleryCode = router.query.galleryCode;
+  const auth = useAuth();
+  const user = auth.user;
+
 
   useEffect(() => {
     let canv = canvasRef.current;
@@ -56,20 +64,6 @@ function Board() {
     setColor(color);
   }
 
-  function createGallery(e) {
-    e.preventDefault();
-    var galleriesRef = db.ref("galleries");
-    galleriesRef.push().set({
-      '0000': {
-        'name': 'testing', 
-        'pictures': {
-          
-        }
-      }
-    });
-
-  }
-
   function saveCanvas(e) {
     e.preventDefault(); 
     var dataURL = canvasRef.current.toDataURL();
@@ -83,10 +77,22 @@ function Board() {
     // Code comes here: https://stackoverflow.com/questions/37873808/how-can-i-save-canvas-as-image-to-firebase-storage
 
 
-    var picturesRef = db.ref("galleries/" + "0000" + "/pictures");
+    var picturesRef = db.ref("galleries/" + galleryCode + "/pictures");
     picturesRef.push().set({
-      'creator': 'william', //TODO: INSERT USERNAME 
-      'imageURL': dataURL
+      'creator': user.name, 
+      'imageURL': dataURL,
+      'comments':[
+        {
+            authorName: 'Ryan',
+            createdAt: '2020-11-28T12:59-0500',
+            text: 'How artistic!'
+        },
+        {
+            authorName: 'Joy',
+            createdAt:'2020-11-27T06:28-0500',
+            text:'Great job!'
+        }
+    ] // a string of comments elements
     });
 
     const context = canvasRef.current.getContext('2d');
@@ -96,8 +102,12 @@ function Board() {
     console.log('The button was clicked.' + dataURL);
   }
 
+  function returnToGallery() {
+    router.push(`/gallery/${galleryCode}`);
+  }
+
   return (
-    <div className="board" ref={parentRef}>
+    <div className={styles.board} ref={parentRef}>
       <Controls handleColor={handleColor} />
       <canvas
         id="c"
@@ -106,13 +116,9 @@ function Board() {
         onMouseUp={handleMouseUp}
         onMouseMove={handleMouseMove}
       />
-      <div>
-        <button onClick={saveCanvas}>
-            Save image to board 
-        </button>
-        <button onClick={createGallery}>
-            Create/Reset test gallery 
-        </button>
+      <div className={styles.buttons}>
+        <Button onClick={saveCanvas} name={"Save Image to Board "} type="solid"/>
+        <Button onClick={returnToGallery} name={"Back to Gallery"} />  
       </div>
     </div>
   );

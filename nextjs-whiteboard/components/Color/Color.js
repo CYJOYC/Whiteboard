@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { ChromePicker } from "react-color";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPalette } from "@fortawesome/free-solid-svg-icons";
+import styles from '../controls.module.css'
 
 function Color(props) {
   const popover = {
@@ -19,6 +20,7 @@ function Color(props) {
   const [color, setColor] = useState("#000000");
 
   function handleClick() {
+    props.handleColor(color);
     setDisplayed(true);
   }
 
@@ -32,11 +34,11 @@ function Color(props) {
   }
 
   return (
-    <div className="color">
+    <div className={styles.color}>
       <FontAwesomeIcon
         onClick={handleClick}
         title="choose color"
-        className="fa-icon"
+        className={styles.faIcon}
         icon={faPalette}
       />
       {displayed ? (
