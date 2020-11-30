@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import styles from './gallery.module.css';
 import Button from '../components/button';
 import { useRouter } from 'next/router';
-import { useGallery } from '../hooks/useGallery';
 import Loader from '../components/loader';
 
 function arraysEqual(a1,a2) {
@@ -11,11 +10,9 @@ function arraysEqual(a1,a2) {
 
 function Gallery(props) {
   const [imageURLs, setimageURLs] = useState([]);
-  // const router = useRouter();
-  // const gallery = useGallery();
-  // if (!gallery.gallery ) return <Loader />;
-  // const galleryCode = router.query.id;
+  const router = useRouter();
   let galleryName = props.data.name;
+  let galleryCode = props.code;
   let picturesTemp = []
   for (let element in props.data.pictures) {
     picturesTemp.push(props.data.pictures[element])

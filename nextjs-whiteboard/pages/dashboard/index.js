@@ -8,13 +8,13 @@ import GalleryForm from '../../components/GalleryForm';
 import { auth, db } from '../../config/firebase';
 import GalleryOption from '../../components/GalleryOption';
 import styles from '../../styles/dashboard.module.css'
-import { useGallery } from '../../hooks/useGallery';
+// import { useGallery } from '../../hooks/useGallery';
 import PopCode from '../../components/PopCode';
 
 
 export default function Dashboard(props) {
     const auth = useRequireAuth();
-    const gallery = useGallery();
+    // const gallery = useGallery();
     const router = useRouter();
     const [isCreateGallery, setIsCreateGallery] = useState(false);
     const [isEnterGalleryCode, setIsEnterGalleryCode] = useState(false);
@@ -65,7 +65,7 @@ export default function Dashboard(props) {
         updateDbUsers(galleryCode, galleryName)
 
         // Direct to whiteboard page
-        gallery.setGallery({galleryCode, galleryName});
+        // gallery.setGallery({galleryCode, galleryName});
         router.push({
             pathname: '/gallery/[id]',
             query: { id: galleryCode},
@@ -86,7 +86,7 @@ export default function Dashboard(props) {
                 let galleryName = data.name;
                 updateDbUsers(galleryCode, galleryName);
                 updateUserGalleries(galleryCode, galleryName);
-                gallery.setGallery({galleryCode, galleryName});
+                // gallery.setGallery({galleryCode, galleryName});
                 router.push({
                     pathname: '/gallery/[id]',
                     query: { id: galleryCode},
@@ -102,7 +102,7 @@ export default function Dashboard(props) {
         galleryNameRef.on('value', (snapshot) => {
             let data = snapshot.val();
             let galleryName = data;
-            gallery.setGallery({galleryCode, galleryName});
+            // gallery.setGallery({galleryCode, galleryName});
         })
         router.push({
             pathname: '/gallery/[id]',
