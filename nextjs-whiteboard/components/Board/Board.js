@@ -92,19 +92,7 @@ function Board() {
     var picturesRef = db.ref("galleries/" + galleryCode + "/pictures");
     picturesRef.push().set({
       'creator': user.name, 
-      'imageURL': dataURL,
-      'comments':[
-        {
-            authorName: 'Ryan',
-            createdAt: '2020-11-28T12:59-0500',
-            text: 'How artistic!'
-        },
-        {
-            authorName: 'Joy',
-            createdAt:'2020-11-27T06:28-0500',
-            text:'Great job!'
-        }
-    ] // a string of comments elements
+      'imageURL': dataURL
     });
 
     const context = canvasRef.current.getContext('2d');

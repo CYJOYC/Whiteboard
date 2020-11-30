@@ -4,7 +4,6 @@ import Button from '../components/button';
 import { useRouter } from 'next/router';
 import { useGallery } from '../hooks/useGallery';
 import Loader from '../components/loader';
-import Modal from 'react-modal';
 import CommentsBlock from './Comments/CommentsBlock.js';
 import { useAuth } from '.././hooks/useAuth';
 
@@ -15,11 +14,13 @@ function arraysEqual(a1,a2) {
 function Gallery(props) {
   const auth = useAuth();
   const [imageURLs, setimageURLs] = useState([]);
-  // const router = useRouter();
+  const router = useRouter();
   // const gallery = useGallery();
   // if (!gallery.gallery ) return <Loader />;
-  // const galleryCode = router.query.id;
+  const galleryCode = router.query.id;
+
   let galleryName = props.data.name;
+ 
   let picturesTemp = [];
   for (let element in props.data.pictures) {
     let image = props.data.pictures[element];
@@ -36,7 +37,7 @@ function Gallery(props) {
       <div className={styles.card}>
         <img src={imageUrl['imageURL']}/>
         <figcaption>Created by {imageUrl['creator']}</figcaption>
-        <CommentsBlock comments={imageUrl['comments']} user={auth.user.name} picId={imageUrl['picId']}/>
+        <CommentsBlock gallery={galleryCode} comments={imageUrl['comments']? imageUrl['comments']: null} user={auth.user.name} picId={imageUrl['picId']}/>
       </div>
     );
   }
