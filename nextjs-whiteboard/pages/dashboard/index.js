@@ -73,8 +73,9 @@ export default function Dashboard(props) {
         event.preventDefault();
         let galleryCode = event.target.code.value;
         let roomNameRef = db.ref('galleries/' + galleryCode);
-        roomNameRef.on('value', (snapshot) =>{
+        roomNameRef.once('value', (snapshot) =>{
             const data = snapshot.val();
+            console.log('this is being called')
             console.log(data)
             if (data == null) {
                 alert("The gallery room code is invalid. Please try again.");
@@ -91,6 +92,7 @@ export default function Dashboard(props) {
 
     const enterGallery = (event) => {
         let galleryCode = event.target.getAttribute('tabIndex');
+        console.log('entergallery called')
 
         let galleryNameRef = db.ref(`galleries/${galleryCode}/name`);
         galleryNameRef.on('value', (snapshot) => {
@@ -124,7 +126,7 @@ export default function Dashboard(props) {
     }
 
     const galleryNoun = () => {
-        if (Object.keys(auth.user.galleries).length != 0) {
+        if (Object.keys(auth.user.galleries).length != 1) {
             return "galleries";
         } else {
             return "gallery";
