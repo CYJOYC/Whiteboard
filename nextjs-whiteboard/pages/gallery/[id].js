@@ -3,11 +3,12 @@ import React from 'react';
 import Gallery from '../../components/Gallery.js';
 import { useAuth } from '../../hooks/useAuth';
 import { db } from '../../config/firebase';
+import Loader from '../../components/loader'; 
 
 export default function Project(props) {
 	const auth = useAuth();
 	return <React.StrictMode>
-		<Gallery data={props.data} code={props.galleryCode}/>
+		<Gallery data={props.data} user={auth.user} code={props.galleryCode}/>
 	</React.StrictMode>
 }
 

@@ -1,9 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React, { useState} from "react";
 import styles from './gallery.module.css';
 import Button from '../components/button';
 import { useRouter } from 'next/router';
 import Loader from '../components/loader';
-import Modal from 'react-modal';
 import CommentsBlock from './Comments/CommentsBlock.js';
 import { useAuth } from '.././hooks/useAuth';
 
@@ -17,7 +16,8 @@ function Gallery(props) {
   const router = useRouter();
   let galleryName = props.data.name;
   let galleryCode = props.code;
-  let picturesTemp = []
+  let picturesTemp = [];
+  
   for (let element in props.data.pictures) {
     let image = props.data.pictures[element];
     image['picId'] = element;
@@ -33,7 +33,7 @@ function Gallery(props) {
       <div className={styles.card}>
         <img src={imageUrl['imageURL']}/>
         <figcaption>Created by {imageUrl['creator']}</figcaption>
-        <CommentsBlock comments={imageUrl['comments']} user={auth.user.name} picId={imageUrl['picId']}/>
+        <CommentsBlock gallery={galleryCode} comments={imageUrl['comments']? imageUrl['comments']: null} user={auth.user.name} picId={imageUrl['picId']}/>
       </div>
     );
   }
