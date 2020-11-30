@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import styles from './gallery.module.css';
 import Button from '../components/button';
 import { useRouter } from 'next/router';
-import { useGallery } from '../hooks/useGallery';
 import Loader from '../components/loader';
 import Modal from 'react-modal';
 import CommentsBlock from './Comments/CommentsBlock.js';
@@ -16,11 +15,9 @@ function Gallery(props) {
   const auth = useAuth();
   const [imageURLs, setimageURLs] = useState([]);
   const router = useRouter();
-  // const gallery = useGallery();
-  // if (!gallery.gallery ) return <Loader />;
-  // const galleryCode = router.query.id;
   let galleryName = props.data.name;
-  let picturesTemp = [];
+  let galleryCode = props.code;
+  let picturesTemp = []
   for (let element in props.data.pictures) {
     let image = props.data.pictures[element];
     image['picId'] = element;
