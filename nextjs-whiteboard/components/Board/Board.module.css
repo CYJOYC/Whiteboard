@@ -1,0 +1,15 @@
+.board {
+    background-color: white;
+    cursor: crosshair;
+    margin: 0 auto;
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+}
+
+.buttons {
+    position: absolute;
+    top: 25px;
+    right: 25px;
+}

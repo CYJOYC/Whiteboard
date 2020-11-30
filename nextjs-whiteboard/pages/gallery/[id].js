@@ -8,7 +8,7 @@ import Loader from '../../components/loader';
 export default function Project(props) {
 	const auth = useAuth();
 	return <React.StrictMode>
-		<Gallery data={props.data} user={auth.user}/>
+		<Gallery data={props.data} user={auth.user} code={props.galleryCode}/>
 	</React.StrictMode>
 }
 
@@ -47,7 +47,8 @@ export async function getStaticProps(context) {
 
 	return {
 		props: {
-			data
+			data,
+			galleryCode
 		}, // will be passed to the page component as props
 	}
 }

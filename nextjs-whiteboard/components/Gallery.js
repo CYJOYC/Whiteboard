@@ -1,8 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React, { useState} from "react";
 import styles from './gallery.module.css';
 import Button from '../components/button';
 import { useRouter } from 'next/router';
-import { useGallery } from '../hooks/useGallery';
 import Loader from '../components/loader';
 import CommentsBlock from './Comments/CommentsBlock.js';
 import { useAuth } from '.././hooks/useAuth';
@@ -15,13 +14,10 @@ function Gallery(props) {
   const auth = useAuth();
   const [imageURLs, setimageURLs] = useState([]);
   const router = useRouter();
-  // const gallery = useGallery();
-  // if (!gallery.gallery ) return <Loader />;
-  const galleryCode = router.query.id;
-
   let galleryName = props.data.name;
- 
+  let galleryCode = props.code;
   let picturesTemp = [];
+  
   for (let element in props.data.pictures) {
     let image = props.data.pictures[element];
     image['picId'] = element;
@@ -50,10 +46,17 @@ function Gallery(props) {
     });
   }
 
+  function backToDashboard() {
+    router.push('/dashboard');
+  }
+
   
   if (!auth.user || !auth.user.name) return <Loader />;
   return (
     <div>
+      <div className={styles.backToDashboardBtn}>
+        <Button type={'outline'} name={'Back to Dashboard'} onClick={backToDashboard} />
+      </div>
       <div className={styles.title}>
         Gallery Room {galleryName}
       </div>

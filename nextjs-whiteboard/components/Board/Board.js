@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from "react";
-import "../board.module.css";
+import styles from  "./Board.module.css";
 import { useRouter } from 'next/router';
 import Controls from "../Controls/Controls";
 import { auth, db } from '../../config/firebase';
-import { useRequireAuth } from '../../hooks/useRequireAuth';
+import { useAuth } from '../../hooks/useAuth';
+import Button from '../../components/button';
 
 
 function Board() {
@@ -16,8 +17,9 @@ function Board() {
   const [color, setColor] = useState("#000000");
   const router = useRouter();
   const galleryCode = router.query.galleryCode;
-  const auth = useRequireAuth();
+  const auth = useAuth();
   const user = auth.user;
+
 
   useEffect(() => {
     let canv = canvasRef.current;
@@ -62,20 +64,6 @@ function Board() {
     setColor(color);
   }
 
-  function createGallery(e) {
-    e.preventDefault();
-    var galleriesRef = db.ref("galleries");
-    galleriesRef.push().set({
-      '0000': {
-        'name': 'testing', 
-        'pictures': {
-          
-        }
-      }
-    });
-
-  }
-
   function saveCanvas(e) {
     e.preventDefault(); 
     var dataURL = canvasRef.current.toDataURL();
@@ -102,8 +90,12 @@ function Board() {
     console.log('The button was clicked.' + dataURL);
   }
 
+  function returnToGallery() {
+    router.push(`/gallery/${galleryCode}`);
+  }
+
   return (
-    <div className="board" ref={parentRef}>
+    <div className={styles.board} ref={parentRef}>
       <Controls handleColor={handleColor} />
       <canvas
         id="c"
@@ -112,13 +104,9 @@ function Board() {
         onMouseUp={handleMouseUp}
         onMouseMove={handleMouseMove}
       />
-      <div>
-        <button onClick={saveCanvas}>
-            Save image to board 
-        </button>
-        <button onClick={createGallery}>
-            Create/Reset test gallery 
-        </button>
+      <div className={styles.buttons}>
+        <Button onClick={saveCanvas} name={"Save Image to Board "} type="solid"/>
+        <Button onClick={returnToGallery} name={"Back to Gallery"} />  
       </div>
     </div>
   );

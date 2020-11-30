@@ -1,22 +1,33 @@
 .controls {
   position: absolute;
-  top: 0;
+  top: 25px;
+  left: 25px;
+  background-color: #F5F4F4;
   display: flex;
   justify-content: center;
-  width: auto;
+  flex-direction: column;
+  border: 1px solid #7A7A7A;
 }
-.controls .fa-icon {
+
+.faIcon {
   cursor: pointer;
-  font-size: 3rem;
-  margin: 0.5rem;
-  padding: 0.5rem;
-  border-radius: 30%;
-  box-shadow: 0 0 6px black;
+  font-size: 32px;
+  margin: 0.4rem;
+  padding: 0.4rem;
   z-index: 2;
-  color: #071a54;
-  background: linear-gradient(
-    90deg,
-    rgba(174, 238, 237, 1) 0%,
-    rgba(181, 23, 23, 1) 100%
-  );
+}
+
+.color, .erase {
+  color: #7A7A7A;
+}
+
+.colorSelected {
+  background-color: #C0BFBF;
+  border-bottom: 1px solid #7A7A7A;
+  color: #585858;
+}
+
+.eraseSelected {
+  background-color: #C0BFBF;
+  border-top: 1px solid #7A7A7A;
 }

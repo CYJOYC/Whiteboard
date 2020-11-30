@@ -12,6 +12,12 @@
 	top: 50px;
 }
 
+.backToDashboardBtn {
+	position: absolute;
+	left: 50px;
+	top: 50px;
+}
+
 .gallery {
 	margin: 25px 50px;
 }
