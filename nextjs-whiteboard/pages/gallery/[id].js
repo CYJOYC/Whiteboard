@@ -5,7 +5,7 @@ import { useAuth } from '../../hooks/useRequireAuth';
 import { db } from '../../config/firebase';
 
 export default function Project(props) {
-	const auth = useRequireAuth();
+	const auth = useAuth();
 	return <React.StrictMode>
 		<Gallery data={props.data}/>
 	</React.StrictMode>
