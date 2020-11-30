@@ -22,9 +22,6 @@ const useAuthProvider = () => {
 		setUser(user);
 		if (user) {
 			getUserAdditionalData(user.uid);
-			// line 27 seems to direct user to '/dashboard' when
-			// refreshing gallery page 
-			router.push('/dashboard');
 		}
 	};
 

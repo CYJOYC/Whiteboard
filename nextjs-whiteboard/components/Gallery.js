@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { db } from '../config/firebase';
 import styles from './gallery.module.css';
 import Button from '../components/button';
 import { useRouter } from 'next/router';
@@ -9,52 +8,24 @@ import Modal from 'react-modal';
 import CommentsBlock from './Comments/CommentsBlock.js';
 import { useRequireAuth } from '.././hooks/useRequireAuth';
 
+function arraysEqual(a1,a2) {
+  return JSON.stringify(a1)==JSON.stringify(a2);
+}
+
 function Gallery(props) {
-  const auth = useRequireAuth();
-  const user = auth.user;
   const [imageURLs, setimageURLs] = useState([]);
-  const router = useRouter();
-  const gallery = useGallery();
-  if (!gallery.gallery ) return <Loader />;
-  const galleryCode = router.query.id;
-  let galleryName = null;
- 
-  let galleryNameRef = db.ref(`galleries/${galleryCode}/name`);
-  galleryNameRef.on('value', (snapshot) => {
-      let data = snapshot.val();
-      galleryName = data;
-  })
-
-  var picturesRef = db.ref(`galleries/${galleryCode}/pictures`);
+  // const router = useRouter();
+  // const gallery = useGallery();
+  // if (!gallery.gallery ) return <Loader />;
+  // const galleryCode = router.query.id;
+  let galleryName = props.data.name;
+  let picturesTemp = []
+  for (let element in props.data.pictures) {
+    picturesTemp.push(props.data.pictures[element])
+  }
   
-  let json = {}
-
-  picturesRef.on("value", function(snapshot) {
-    json = snapshot.val();
-    console.log(snapshot.key);
-
-    let test = []
-    for (let element in json) {
-      test.push(json[element])
-    }
-    
-    if (!arraysEqual(test, imageURLs)) {
-      setimageURLs(test)
-    }
-      // for (let element in json) {
-      //   if (!(imageURLs.includes(json[element]['imageURL']))) {
-      //     let arrayClone = [...imageURLs]
-      //     setimageURLs(arrayClone.push(json[element]['imageURL']))
-      //   }
-      // }
-  }, function (errorObject) {
-    console.log("The read failed: " + errorObject.code);
-  });  
-
-  // let imageURLs = ['https://homepages.cae.wisc.edu/~ece533/images/fruits.png','https://homepages.cae.wisc.edu/~ece533/images/peppers.png']
-  
-  function arraysEqual(a1,a2) {
-    return JSON.stringify(a1)==JSON.stringify(a2);
+  if (!arraysEqual(picturesTemp, imageURLs)) {
+    setimageURLs(picturesTemp)
   }
 
   function renderImage(imageUrl) {
@@ -81,7 +52,6 @@ function Gallery(props) {
   return (
     <div>
       <div className={styles.title}>
-        {/* Gallery Room {gallery.gallery.galleryName} */}
         Gallery Room {galleryName}
       </div>
       <div className={styles.newBoardBtn}>
@@ -97,4 +67,6 @@ function Gallery(props) {
 }
 
 export default Gallery;
+
+
 
