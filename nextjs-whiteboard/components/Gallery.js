@@ -3,21 +3,27 @@ import styles from './gallery.module.css';
 import Button from '../components/button';
 import { useRouter } from 'next/router';
 import Loader from '../components/loader';
+import Modal from 'react-modal';
+import CommentsBlock from './Comments/CommentsBlock.js';
+import { useAuth } from '.././hooks/useAuth';
 
 function arraysEqual(a1,a2) {
   return JSON.stringify(a1)==JSON.stringify(a2);
 }
 
 function Gallery(props) {
+  const auth = useAuth();
   const [imageURLs, setimageURLs] = useState([]);
   const router = useRouter();
   let galleryName = props.data.name;
   let galleryCode = props.code;
   let picturesTemp = []
   for (let element in props.data.pictures) {
-    picturesTemp.push(props.data.pictures[element])
+    let image = props.data.pictures[element];
+    image['picId'] = element;
+    picturesTemp.push(image)
   }
-  
+
   if (!arraysEqual(picturesTemp, imageURLs)) {
     setimageURLs(picturesTemp)
   }
@@ -25,11 +31,13 @@ function Gallery(props) {
   function renderImage(imageUrl) {
     return (
       <div className={styles.card}>
-        <img src={imageUrl['imageURL']} />
+        <img src={imageUrl['imageURL']}/>
         <figcaption>Created by {imageUrl['creator']}</figcaption>
+        <CommentsBlock comments={imageUrl['comments']} user={auth.user.name} picId={imageUrl['picId']}/>
       </div>
     );
   }
+
 
   function createBoard() {
     router.push({
@@ -38,10 +46,17 @@ function Gallery(props) {
     });
   }
 
+  function backToDashboard() {
+    router.push('/dashboard');
+  }
+
   
-  
+  if (!auth.user || !auth.user.name) return <Loader />;
   return (
     <div>
+      <div className={styles.backToDashboardBtn}>
+        <Button type={'outline'} name={'Back to Dashboard'} onClick={backToDashboard} />
+      </div>
       <div className={styles.title}>
         Gallery Room {galleryName}
       </div>
@@ -50,7 +65,7 @@ function Gallery(props) {
       </div>
       <div className={styles.gallery}>
         <div className={styles.images}>
-          {imageURLs.map(imageUrl => renderImage(imageUrl))}
+          {imageURLs.map((imageUrl) => renderImage(imageUrl))}
         </div>
       </div>
     </div>
