@@ -3,7 +3,7 @@ import React from 'react';
 import Gallery from '../../components/Gallery.js';
 import { useAuth } from '../../hooks/useAuth';
 import { db } from '../../config/firebase';
-import Loader from '../../components/loader'; 
+import Loader from '../../components/Loader'; 
 
 export default function Project(props) {
 	const auth = useAuth();

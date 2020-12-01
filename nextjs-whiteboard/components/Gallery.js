@@ -1,8 +1,8 @@
 import React, { useState} from "react";
 import styles from './gallery.module.css';
-import Button from '../components/button';
+import Button from '../components/Button';
 import { useRouter } from 'next/router';
-import Loader from '../components/loader';
+import Loader from '../components/Loader';
 import CommentsBlock from './Comments/CommentsBlock.js';
 import { useAuth } from '.././hooks/useAuth';
 

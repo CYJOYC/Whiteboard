@@ -4,7 +4,7 @@ import { useRouter } from 'next/router';
 import Controls from "../Controls/Controls";
 import { auth, db } from '../../config/firebase';
 import { useAuth } from '../../hooks/useAuth';
-import Button from '../../components/button';
+import Button from '../../components/Button';
 
 
 function Board() {

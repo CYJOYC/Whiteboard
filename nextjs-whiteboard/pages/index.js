@@ -2,12 +2,12 @@ import Head from 'next/head'
 import Image from 'next/image'
 import styles from '../styles/Home.module.css'
 import dynamic from 'next/dynamic'
-import Button from '../components/button'
-import Popup from '../components/popup'
+import Button from '../components/Button'
+import Popup from '../components/PopUp'
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/router'
 import { auth } from '../config/firebase'
-import Loader from '../components/loader'
+import Loader from '../components/Loader'
 
 const TEXTS = [
     'Drawing',

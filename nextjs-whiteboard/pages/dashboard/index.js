@@ -1,8 +1,8 @@
 import { useRequireAuth } from '../../hooks/useRequireAuth';
 import { useRouter } from 'next/router';
-import Button from '../../components/button';
+import Button from '../../components/Button';
 import { useState, useEffect } from 'react';
-import Loader from '../../components/loader';
+import Loader from '../../components/Loader';
 // import GalleryOption from '../components/GalleryOption';
 import GalleryForm from '../../components/GalleryForm';
 import { auth, db } from '../../config/firebase';
